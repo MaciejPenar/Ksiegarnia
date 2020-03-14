@@ -170,37 +170,9 @@ public class MyController {
     }      
     
 //------------------------------------------    DODAWANIE    ------------------------------------------\\
-    
-//--------- DODAWANIE KLIENTA ---------\\
-    
-        @RequestMapping("/add_klient")
-    public String addKlient(Model model)
-    {       
-        TransKlient transKlient = new TransKlient();                
-        model.addAttribute("transKlient", transKlient);         
-        return "addformklient";  
-    }
-    
-        @RequestMapping(value = "/add_klient", method = RequestMethod.POST)
-    public String addKlient(Model model,TransKlient transKlient)
-    {
-        String imie = transKlient.getImie();
-        String nazwisko = transKlient.getNazwisko();
-        String email = transKlient.getEmail();
-        
-        try
-        {
-        klientRepository.save(new Klient(imie,nazwisko,email));
-        
-        model.addAttribute("header", "Wynik"); 
-        model.addAttribute("message","Wstawiono do bazy klienta: "+imie+" "+nazwisko); 
-        } catch (Exception e)
-        { return "errorklient";
-                }
-        return "viewmessageklient";                
-    }
-    
-    //--------- DODAWANIE AUTORA ---------\\
+
+
+//--------- DODAWANIE AUTORA ---------\\
     
         @RequestMapping("/add_autor")
     public String addAutor(Model model)
@@ -228,7 +200,7 @@ public class MyController {
         return "viewmessageautor";                
     }
     
-    //--------- DODAWANIE GATUNKU ---------\\
+//--------- DODAWANIE GATUNKU ---------\\
     
         @RequestMapping("/add_gatunek")
     public String addGatunek(Model model)
@@ -253,9 +225,9 @@ public class MyController {
         { return "errorwydawnictwo";
                 }
         return "viewmessagegatunek";                
-    }
+    }  
     
-    //--------- DODAWANIE KSIAZKI ---------\\
+//--------- DODAWANIE KSIAZKI ---------\\
     
         @RequestMapping("/add_ksiazka")
     public String addKsiazka(Model model)
@@ -283,41 +255,9 @@ public class MyController {
         { return "errorksiazka";
                 }
         return "viewmessageksiazka";                
-    }
-
+    }    
     
-     //--------- DODAWANIE PRACOWNIKA ---------\\
-    
-        @RequestMapping("/add_pracownik")
-    public String addPracownik(Model model)
-    {       
-        TransPracownik transPracownik = new TransPracownik();                
-        model.addAttribute("transPracownik", transPracownik);         
-        return "addformpracownik";  
-    }
-    
-        @RequestMapping(value = "/add_pracownik", method = RequestMethod.POST)
-    public String addPracownik(Model model,TransPracownik transPracownik)
-    {
-        String imie = transPracownik.getImie();
-        String nazwisko = transPracownik.getNazwisko();
-        String stelefon = transPracownik.getStelefon();
-        int telefon = Integer.parseInt(stelefon);
-        String stanowisko = transPracownik.getStanowisko();
-        
-        try
-        {
-        pracownikRepository.save(new Pracownik(imie,nazwisko,telefon,stanowisko));
-        
-        model.addAttribute("header", "Wynik"); 
-        model.addAttribute("message","Wstawiono do bazy pracwonika: "+imie+" "+nazwisko); 
-        } catch (Exception e)
-        { return "errorpracownik";
-                }
-        return "viewmessagepracownik";                
-    }
-    
-    //--------- DODAWANIE ZAMOWIENIA ---------\\
+//--------- DODAWANIE ZAMOWIENIA ---------\\
     
     @RequestMapping("/add_zam")
     public String addZam(Model model)
@@ -373,6 +313,97 @@ public class MyController {
                 }
         
         return "viewmessagezam";                
+    }
+    
+//--------- DODAWANIE KLIENTA ---------\\
+    
+        @RequestMapping("/add_klient")
+    public String addKlient(Model model)
+    {       
+        TransKlient transKlient = new TransKlient();                
+        model.addAttribute("transKlient", transKlient);         
+        return "addformklient";  
+    }
+    
+        @RequestMapping(value = "/add_klient", method = RequestMethod.POST)
+    public String addKlient(Model model,TransKlient transKlient)
+    {
+        String imie = transKlient.getImie();
+        String nazwisko = transKlient.getNazwisko();
+        String email = transKlient.getEmail();
+        
+        try
+        {
+        klientRepository.save(new Klient(imie,nazwisko,email));
+        
+        model.addAttribute("header", "Wynik"); 
+        model.addAttribute("message","Wstawiono do bazy klienta: "+imie+" "+nazwisko); 
+        } catch (Exception e)
+        { return "errorklient";
+                }
+        return "viewmessageklient";                
+    }
+
+//--------- DODAWANIE PRACOWNIKA ---------\\
+    
+        @RequestMapping("/add_pracownik")
+    public String addPracownik(Model model)
+    {       
+        TransPracownik transPracownik = new TransPracownik();                
+        model.addAttribute("transPracownik", transPracownik);         
+        return "addformpracownik";  
+    }
+    
+        @RequestMapping(value = "/add_pracownik", method = RequestMethod.POST)
+    public String addPracownik(Model model,TransPracownik transPracownik)
+    {
+        String imie = transPracownik.getImie();
+        String nazwisko = transPracownik.getNazwisko();
+        String stelefon = transPracownik.getStelefon();
+        int telefon = Integer.parseInt(stelefon);
+        String stanowisko = transPracownik.getStanowisko();
+        
+        try
+        {
+        pracownikRepository.save(new Pracownik(imie,nazwisko,telefon,stanowisko));
+        
+        model.addAttribute("header", "Wynik"); 
+        model.addAttribute("message","Wstawiono do bazy pracwonika: "+imie+" "+nazwisko); 
+        } catch (Exception e)
+        { return "errorpracownik";
+                }
+        return "viewmessagepracownik";                
+    }
+    
+//--------- DODAWANIE ADRESU ---------\\
+    
+        @RequestMapping("/add_adres")
+    public String addAdres(Model model)
+    {       
+        TransAdres transAdres = new TransAdres();                
+        model.addAttribute("transAdres", transAdres);         
+        return "addformadres";  
+    }
+    
+        @RequestMapping(value = "/add_adres", method = RequestMethod.POST)
+    public String addAdres(Model model,TransAdres transAdres)
+    {
+        String miejscowosc = transAdres.getMiejscowosc();
+        String ulica = transAdres.getUlica();
+        String snrDomu = transAdres.getSnrDomu();
+        int nrDomu = Integer.parseInt(snrDomu);
+        String kodPocztowy = transAdres.getKodPocztowy();
+        
+        try
+        {
+        pracownikRepository.save(new Pracownik(miejscowosc,ulica,nrDomu,kodPocztowy));
+        
+        model.addAttribute("header", "Wynik"); 
+        model.addAttribute("message","Wstawiono do bazy adres: "+miejscowosc+" "+ulica); 
+        } catch (Exception e)
+        { return "erroradres";
+                }
+        return "viewmessageadres";                
     }
 
     
