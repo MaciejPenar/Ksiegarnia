@@ -315,35 +315,6 @@ public class MyController {
         return "viewmessagezam";                
     }
     
-//--------- DODAWANIE KLIENTA ---------\\
-    
-        @RequestMapping("/add_klient")
-    public String addKlient(Model model)
-    {       
-        TransKlient transKlient = new TransKlient();                
-        model.addAttribute("transKlient", transKlient);         
-        return "addformklient";  
-    }
-    
-        @RequestMapping(value = "/add_klient", method = RequestMethod.POST)
-    public String addKlient(Model model,TransKlient transKlient)
-    {
-        String imie = transKlient.getImie();
-        String nazwisko = transKlient.getNazwisko();
-        String email = transKlient.getEmail();
-        
-        try
-        {
-        klientRepository.save(new Klient(imie,nazwisko,email));
-        
-        model.addAttribute("header", "Wynik"); 
-        model.addAttribute("message","Wstawiono do bazy klienta: "+imie+" "+nazwisko); 
-        } catch (Exception e)
-        { return "errorklient";
-                }
-        return "viewmessageklient";                
-    }
-
 //--------- DODAWANIE PRACOWNIKA ---------\\
     
         @RequestMapping("/add_pracownik")
@@ -373,6 +344,35 @@ public class MyController {
         { return "errorpracownik";
                 }
         return "viewmessagepracownik";                
+    }
+    
+//--------- DODAWANIE KLIENTA ---------\\
+    
+        @RequestMapping("/add_klient")
+    public String addKlient(Model model)
+    {       
+        TransKlient transKlient = new TransKlient();                
+        model.addAttribute("transKlient", transKlient);         
+        return "addformklient";  
+    }
+    
+        @RequestMapping(value = "/add_klient", method = RequestMethod.POST)
+    public String addKlient(Model model,TransKlient transKlient)
+    {
+        String imie = transKlient.getImie();
+        String nazwisko = transKlient.getNazwisko();
+        String email = transKlient.getEmail();
+        
+        try
+        {
+        klientRepository.save(new Klient(imie,nazwisko,email));
+        
+        model.addAttribute("header", "Wynik"); 
+        model.addAttribute("message","Wstawiono do bazy klienta: "+imie+" "+nazwisko); 
+        } catch (Exception e)
+        { return "errorklient";
+                }
+        return "viewmessageklient";                
     }
     
 //--------- DODAWANIE ADRESU ---------\\
@@ -407,7 +407,198 @@ public class MyController {
     }
 
     
-    //--------- USUWANIE KLIENTA ---------\\
+//------------------------------------------    USUWANIE    ------------------------------------------\\
+    
+//--------- USUWANIE AUTORA ---------\\
+        
+        @RequestMapping("/delete_autor")
+    public String deleteAutor(Model model)
+    {       
+        TransAutor transAutor = new TransAutor();                
+        model.addAttribute("transAutor", transAutor);         
+        return "deleteformautor";  
+    }
+    
+    @RequestMapping(value = "/delete_autor", method = RequestMethod.POST)
+    public String deleteAutor(Model model,TransAutor transAutor)
+    {
+        String imie = transAutor.getImie();
+        String nazwisko = transAutor.getNazwisko();
+        
+        List<Autor> autorList = autorRepository.findByImieAndNazwisko(imie,nazwisko);
+        
+        try{
+        if (autorList.size()==0)
+        {         
+            model.addAttribute("errormessage","Nie ma osoby: "+imie+" "+nazwisko); 
+            return "errorautor";                
+        }
+        else
+        {        
+            long id = autorList.get(0).getId();
+            autorRepository.deleteById(id);
+
+            model.addAttribute("header", "Wynik"); 
+            model.addAttribute("message","Usunieto autora: "+imie+" "+nazwisko); 
+            return "viewmessageautor";                
+        }
+         } catch (Exception e)
+        { return "errorautor";
+                }
+    }
+    
+//--------- USUWANIE GATUNKU ---------\\
+        
+        @RequestMapping("/delete_gatunek")
+    public String deleteGatunek(Model model)
+    {       
+        TransGatunek transGatunek = new TransGatunek();                
+        model.addAttribute("transGatunek", transGatunek);         
+        return "deleteformgatunek";  
+    }
+    
+    @RequestMapping(value = "/delete_gatunek", method = RequestMethod.POST)
+    public String deleteGatunek(Model model,TransGatunek transGatunek)
+    {
+        String nazwa = transGatunek.getNazwa();
+        
+        List<Gatunek> gatunekList = gatunekRepository.findByNazwa(nazwa);
+        
+        try{
+        if (gatunekList.size()==0)
+        {         
+            model.addAttribute("errormessage","Nie ma gatuneku: "+nazwa); 
+            return "errorgatunek";                
+        }
+        else
+        {        
+            long id = gatunekList.get(0).getId();
+            gatunekRepository.deleteById(id);
+
+            model.addAttribute("header", "Wynik"); 
+            model.addAttribute("message","Usunieto gatunek: "+nazwa); 
+            return "viewmessagegatunek";                
+        }
+        } catch (Exception e)
+        { return "errorgatunek";
+                }
+    }
+    
+//--------- USUWANIE KSIAZKI ---------\\
+        
+        @RequestMapping("/delete_ksiazka")
+    public String deleteKsiazka(Model model)
+    {       
+        TransKsiazka transKsiazka = new TransKsiazka();                
+        model.addAttribute("transKsiazka", transKsiazka);         
+        return "deleteformksiazka";  
+    }
+    
+    @RequestMapping(value = "/delete_ksiazka", method = RequestMethod.POST)
+    public String deleteKsiazka(Model model,TransKsiazka transKsiazka)
+    {
+        String nazwa = transKsiazka.getNazwa();
+        String gatunek = transKsiazka.getGatunek();
+        
+        List<Ksiazka> ksiazkaList = ksiazkaRepository.findByNazwaAndGatunek(nazwa, gatunek);
+        
+        try{
+        if (ksiazkaList.size()==0)
+        {         
+            model.addAttribute("errormessage","Nie ma ksiazki: "+nazwa+" "+gatunek); 
+            return "errorksiazka";                
+        }
+        else
+        {        
+            long id = ksiazkaList.get(0).getId();
+            ksiazkaRepository.deleteById(id);
+
+            model.addAttribute("header", "Wynik"); 
+            model.addAttribute("message","Usunieto ksiazke: "+nazwa+" "+gatunek); 
+            return "viewmessageksiazka";                
+        }
+        } catch (Exception e)
+        { return "errorksiazka";
+                }
+    }
+    
+//--------- USUWANIE ZAMOWIENIA ---------\\
+        
+        @RequestMapping("/delete_zamowienie")
+    public String deleteZamowienie(Model model)
+    {       
+        TransZamowienie transZamowienie = new TransZamowienie();                
+        model.addAttribute("transZamowienie", transZamowienie);         
+        return "deleteformzamowienie";  
+    }
+    
+    @RequestMapping(value = "/delete_zamowienie", method = RequestMethod.POST)
+    public String deleteZamowienie(Model model,TransZamowienie transZamowienie)
+    {
+        String dataZamowienia = transZamowienie.getDataZamowienia();
+        
+        List<Zamowienie> zamowienieList = zamowienieRepository.findByDataZamowienia(dataZamowienia);
+        
+        try{
+        if (zamowienieList.size()==0)
+        {          
+            model.addAttribute("errormessage","Nie ma zamowienia z: "+dataZamowienia); 
+            return "errorzam";                
+        }
+        else
+        {        
+            long id = zamowienieList.get(0).getId();
+            zamowienieRepository.deleteById(id);
+
+            model.addAttribute("header", "Wynik"); 
+            model.addAttribute("message","Usunieto zamowienie z: "+dataZamowienia); 
+            return "viewmessagezam";                
+        }
+        } catch (Exception e)
+        { return "errorzam";
+                }
+    }
+ 
+//--------- USUWANIE PRACOWNIKA ---------\\
+        
+        @RequestMapping("/delete_pracownik")
+    public String deletePracownik(Model model)
+    {       
+        TransPracownik transPracownik = new TransPracownik();                
+        model.addAttribute("transPracownik", transPracownik);         
+        return "deleteformpracownik";  
+    }
+    
+    @RequestMapping(value = "/delete_pracownik", method = RequestMethod.POST)
+    public String deletePracownik(Model model,TransPracownik transPracownik)
+    {
+        String imie = transPracownik.getImie();
+        String nazwisko = transPracownik.getNazwisko();
+        
+        List<Pracownik> pracownikList = pracownikRepository.findByImieAndNazwisko(imie,nazwisko);
+        
+        try{
+        
+        if (pracownikList.size()==0)
+        {         
+            model.addAttribute("errormessage","Nie ma pracownika: "+imie+" "+nazwisko); 
+            return "errorpracownik";                
+        }
+        else
+        {        
+            long id = pracownikList.get(0).getId();
+            pracownikRepository.deleteById(id);
+
+            model.addAttribute("header", "Wynik"); 
+            model.addAttribute("message","Usunieto pracownika: "+imie+" "+nazwisko); 
+            return "viewmessagepracownik";                
+        }
+        } catch (Exception e)
+        { return "errorpracownik";
+                }
+    }    
+    
+//--------- USUWANIE KLIENTA ---------\\
         
         @RequestMapping("/delete_klient")
     public String deleteKlient(Model model)
@@ -446,194 +637,47 @@ public class MyController {
                 }
     }
     
-    //--------- USUWANIE AUTORA ---------\\
+//--------- USUWANIE ADRESU ---------\\
         
-        @RequestMapping("/delete_autor")
-    public String deleteAutor(Model model)
+        @RequestMapping("/delete_adres")
+    public String deleteAdres(Model model)
     {       
-        TransAutor transAutor = new TransAutor();                
-        model.addAttribute("transAutor", transAutor);         
-        return "deleteformautor";  
+        TransAdres transAdres = new TransAdres();                
+        model.addAttribute("transAdres", transAdres);         
+        return "deleteformadres";  
     }
     
-    @RequestMapping(value = "/delete_autor", method = RequestMethod.POST)
-    public String deleteAutor(Model model,TransAutor transAutor)
+    @RequestMapping(value = "/delete_adres", method = RequestMethod.POST)
+    public String deleteAdres(Model model,TransAdres transAdres)
     {
-        String imie = transAutor.getImie();
-        String nazwisko = transAutor.getNazwisko();
+        String miejscowosc = transAdres.getMiejscowosc();
+        String ulica = transAdres.getUlica();
         
-        List<Autor> autorList = autorRepository.findByImieAndNazwisko(imie,nazwisko);
-        
-        try{
-        if (autorList.size()==0)
-        {         
-            model.addAttribute("errormessage","Nie ma osoby: "+imie+" "+nazwisko); 
-            return "errorautor";                
-        }
-        else
-        {        
-            long id = autorList.get(0).getId();
-            autorRepository.deleteById(id);
-
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto autora: "+imie+" "+nazwisko); 
-            return "viewmessageautor";                
-        }
-         } catch (Exception e)
-        { return "errorautor";
-                }
-    }
-    
-     //--------- USUWANIE PRACOWNIKA ---------\\
-        
-        @RequestMapping("/delete_pracownik")
-    public String deletePracownik(Model model)
-    {       
-        TransPracownik transPracownik = new TransPracownik();                
-        model.addAttribute("transPracownik", transPracownik);         
-        return "deleteformpracownik";  
-    }
-    
-    @RequestMapping(value = "/delete_pracownik", method = RequestMethod.POST)
-    public String deletePracownik(Model model,TransPracownik transPracownik)
-    {
-        String imie = transPracownik.getImie();
-        String nazwisko = transPracownik.getNazwisko();
-        
-        List<Pracownik> pracownikList = pracownikRepository.findByImieAndNazwisko(imie,nazwisko);
+        List<Adres> adresList = adresRepository.findByMiejscowoscAndUlica(miejscowosc,ulica);
         
         try{
         
-        if (pracownikList.size()==0)
+        if (adresList.size()==0)
         {         
-            model.addAttribute("errormessage","Nie ma pracownika: "+imie+" "+nazwisko); 
-            return "errorpracownik";                
+            model.addAttribute("errormessage","Nie ma adresu: "+miejscowosc+" "+ulica); 
+            return "erroradres";                
         }
         else
         {        
-            long id = pracownikList.get(0).getId();
-            pracownikRepository.deleteById(id);
+            long id = adresList.get(0).getId();
+            adresRepository.deleteById(id);
 
             model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto pracownika: "+imie+" "+nazwisko); 
-            return "viewmessagepracownik";                
+            model.addAttribute("message","Usunieto adres: "+miejscowosc+" "+ulica); 
+            return "viewmessageadres";                
         }
         } catch (Exception e)
-        { return "errorpracownik";
+        { return "erroradres";
                 }
     }
-    
-     //--------- USUWANIE WYDAWNICTWA ---------\\
-        
-        @RequestMapping("/delete_gatunek")
-    public String deleteGatunek(Model model)
-    {       
-        TransGatunek transGatunek = new TransGatunek();                
-        model.addAttribute("transGatunek", transGatunek);         
-        return "deleteformgatunek";  
-    }
-    
-    @RequestMapping(value = "/delete_gatunek", method = RequestMethod.POST)
-    public String deleteGatunek(Model model,TransGatunek transGatunek)
-    {
-        String nazwa = transGatunek.getNazwa();
-        
-        List<Gatunek> gatunekList = gatunekRepository.findByNazwa(nazwa);
-        
-        try{
-        if (gatunekList.size()==0)
-        {         
-            model.addAttribute("errormessage","Nie ma gatuneku: "+nazwa); 
-            return "errorgatunek";                
-        }
-        else
-        {        
-            long id = gatunekList.get(0).getId();
-            gatunekRepository.deleteById(id);
 
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto gatunek: "+nazwa); 
-            return "viewmessagegatunek";                
-        }
-        } catch (Exception e)
-        { return "errorgatunek";
-                }
-    }
     
-        //--------- USUWANIE KSIAZKI ---------\\
-        
-        @RequestMapping("/delete_ksiazka")
-    public String deleteKsiazka(Model model)
-    {       
-        TransKsiazka transKsiazka = new TransKsiazka();                
-        model.addAttribute("transKsiazka", transKsiazka);         
-        return "deleteformksiazka";  
-    }
     
-    @RequestMapping(value = "/delete_ksiazka", method = RequestMethod.POST)
-    public String deleteKsiazka(Model model,TransKsiazka transKsiazka)
-    {
-        String nazwa = transKsiazka.getNazwa();
-        String gatunek = transKsiazka.getGatunek();
-        
-        List<Ksiazka> ksiazkaList = ksiazkaRepository.findByNazwaAndGatunek(nazwa, gatunek);
-        
-        try{
-        if (ksiazkaList.size()==0)
-        {         
-            model.addAttribute("errormessage","Nie ma ksiazki: "+nazwa+" "+gatunek); 
-            return "errorksiazka";                
-        }
-        else
-        {        
-            long id = ksiazkaList.get(0).getId();
-            ksiazkaRepository.deleteById(id);
-
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto ksiazke: "+nazwa+" "+gatunek); 
-            return "viewmessageksiazka";                
-        }
-        } catch (Exception e)
-        { return "errorksiazka";
-                }
-    }
-    
-     //--------- USUWANIE ZAMOWIENIA ---------\\
-        
-        @RequestMapping("/delete_zamowienie")
-    public String deleteZamowienie(Model model)
-    {       
-        TransZamowienie transZamowienie = new TransZamowienie();                
-        model.addAttribute("transZamowienie", transZamowienie);         
-        return "deleteformzamowienie";  
-    }
-    
-    @RequestMapping(value = "/delete_zamowienie", method = RequestMethod.POST)
-    public String deleteZamowienie(Model model,TransZamowienie transZamowienie)
-    {
-        String dataZamowienia = transZamowienie.getDataZamowienia();
-        
-        List<Zamowienie> zamowienieList = zamowienieRepository.findByDataZamowienia(dataZamowienia);
-        
-        try{
-        if (zamowienieList.size()==0)
-        {          
-            model.addAttribute("errormessage","Nie ma zamowienia z: "+dataZamowienia); 
-            return "errorzam";                
-        }
-        else
-        {        
-            long id = zamowienieList.get(0).getId();
-            zamowienieRepository.deleteById(id);
-
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto zamowienie z: "+dataZamowienia); 
-            return "viewmessagezam";                
-        }
-        } catch (Exception e)
-        { return "errorzam";
-                }
-    }
     
         //--------- EDYTOWANIE KLIENTA ---------\\
         
