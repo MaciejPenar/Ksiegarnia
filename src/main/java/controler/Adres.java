@@ -21,6 +21,11 @@ public class Adres {
     private int nrDomu;
     private String kodPocztowy;
 
+    @OneToMany 
+    private Set<Klient> klienci;
+        
+    @OneToMany 
+    private Set<Pracownik> pracownicy;
 
     protected Adres() {}
     
@@ -29,14 +34,18 @@ public class Adres {
         this.miejscowosc = miejscowosc;
         this.ulica = ulica;
         this.nrDomu = nrDomu;     
-        this.kodPocztowy = kodPocztowy;   
+        this.kodPocztowy = kodPocztowy;  
+        this.klienci = klienci;
+        this.pracownicy = pracownicy;
     }
 
     public Adres( String miejscowosc, String ulica, int nrDomu, String kodPocztowy) {
         this.miejscowosc = miejscowosc;
         this.ulica = ulica;
         this.nrDomu = nrDomu;     
-        this.kodPocztowy = kodPocztowy;   
+        this.kodPocztowy = kodPocztowy;  
+        this.klienci = klienci;
+        this.pracownicy = pracownicy;
     }
 
     public Long getId() {

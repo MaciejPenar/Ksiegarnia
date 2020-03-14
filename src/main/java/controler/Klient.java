@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -22,6 +23,9 @@ public class Klient {
 
     @OneToMany 
     private Set<Zamowienie> zamowienia;
+    
+    @ManyToOne 
+    private Adres adres;
 
     protected Klient() {}
 
@@ -32,6 +36,7 @@ public class Klient {
         this.nazwisko = nazwisko;
         this.email = email;        
         zamowienia = new HashSet<Zamowienie>();
+        adres = null;
     }
     
     public Klient(String imie, String nazwisko, String email) {
@@ -39,6 +44,7 @@ public class Klient {
         this.nazwisko = nazwisko;
         this.email = email;        
         zamowienia = new HashSet<Zamowienie>();
+        adres = null;
     }
 
     public Set<Zamowienie> getZamowienia() {
@@ -82,6 +88,15 @@ public class Klient {
         this.email = email;
     }
 
+    public Adres getAdres() {
+        return adres;
+    }
+
+    public void setAdres(Adres adres) {
+        this.adres = adres;
+    }
+
+    
     
 
     @Override

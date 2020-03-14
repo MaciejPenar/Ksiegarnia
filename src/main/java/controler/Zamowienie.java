@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Zamowienie {
@@ -23,8 +24,11 @@ public class Zamowienie {
     @ManyToOne 
     private Klient klient;
     
-    @ManyToOne
-    private Ksiazka ksiazka;
+    @ManyToOne 
+    private Pracownik pracownik;
+    
+   @OneToMany(mappedBy = "ksiazka") 
+    private Set<Ksiazka> ksiazki;
     
      protected Zamowienie() {}
 
@@ -35,7 +39,8 @@ public class Zamowienie {
         this.koszt = koszt;
         this.metodaPlatnosci = metodaPlatnosci;
         this.klient = klient;
-        this.ksiazka = ksiazka;
+        pracownik = null;
+        this.ksiazki = ksiazki;
     }
      
     public Zamowienie(String dataZamowienia, String dataOtrzymania, int koszt, String metodaPlatnosci, Klient klient, Ksiazka ksiazka) {
@@ -44,15 +49,16 @@ public class Zamowienie {
         this.koszt = koszt;
         this.metodaPlatnosci = metodaPlatnosci;
         this.klient = klient;
-        this.ksiazka = ksiazka;
+        pracownik = null;
+        this.ksiazki = ksiazki;
     }
 
-    public Ksiazka getKsiazka() {
-        return ksiazka;
+    public Set<Ksiazka> getKsiazki() {
+        return ksiazki;
     }
 
-    public void setKsiazka(Ksiazka ksiazka) {
-        this.ksiazka = ksiazka;
+    public void setKsiazki(Set<Ksiazka> ksiazki) {
+        this.ksiazki = ksiazki;
     }
 
     public Long getId() {
@@ -93,6 +99,14 @@ public class Zamowienie {
     
     public void setKoszt(int koszt) {
         this.koszt = koszt;
+    }
+
+    public Pracownik getPracownik() {
+        return pracownik;
+    }
+
+    public void setPracownik(Pracownik pracownik) {
+        this.pracownik = pracownik;
     }
 
     public Klient getKlient() {

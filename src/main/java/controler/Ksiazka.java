@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Ksiazka {
@@ -25,6 +26,9 @@ public class Ksiazka {
     @ManyToMany
     private Set<Gatunek> gatunki;
     
+    @ManyToOne 
+    private Zamowienie zamowienie;
+    
     protected Ksiazka() {}
     
     
@@ -36,6 +40,7 @@ public class Ksiazka {
         this.cena = cena;
         autorzy = new HashSet<Autor>();
         gatunki = new HashSet<Gatunek>();
+        zamowienie = null;
 
     }
     
@@ -46,6 +51,7 @@ public class Ksiazka {
         this.cena = cena;
         autorzy = new HashSet<Autor>();
         gatunki = new HashSet<Gatunek>();
+        zamowienie = null;
     }
 
     public Long getId() {
@@ -94,6 +100,14 @@ public class Ksiazka {
 
     public void setAutorzy(Set<Autor> autorzy) {
         this.autorzy = autorzy;
+    }
+
+    public Zamowienie getZamowienie() {
+        return zamowienie;
+    }
+
+    public void setZamowienie(Zamowienie zamowienie) {
+        this.zamowienie = zamowienie;
     }
 
 

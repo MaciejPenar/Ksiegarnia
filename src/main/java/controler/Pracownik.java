@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -20,7 +21,11 @@ public class Pracownik {
     private int telefon;
     private String stanowisko;
     
+    @OneToMany 
+    private Set<Zamowienie> zamowienia;
 
+    @ManyToOne 
+    private Adres adres;
 
     protected Pracownik() {}
 
@@ -31,6 +36,8 @@ public class Pracownik {
         this.nazwisko = nazwisko;
         this.telefon = telefon;        
         this.stanowisko = stanowisko;
+        zamowienia = new HashSet<Zamowienie>();
+        adres = null;
     }
     
     public Pracownik(String imie, String nazwisko, int telefon, String stanowisko) {
@@ -38,6 +45,8 @@ public class Pracownik {
         this.nazwisko = nazwisko;
         this.telefon = telefon;        
         this.stanowisko = stanowisko;
+        zamowienia = new HashSet<Zamowienie>();
+        adres = null;
     }
 
     public Long getId() {
@@ -79,6 +88,24 @@ public class Pracownik {
     public void setStanowisko(String stanowisko) {
         this.stanowisko = stanowisko;
     }
+
+    public Set<Zamowienie> getZamowienia() {
+        return zamowienia;
+    }
+
+    public void setZamowienia(Set<Zamowienie> zamowienia) {
+        this.zamowienia = zamowienia;
+    }
+
+    public Adres getAdres() {
+        return adres;
+    }
+
+    public void setAdres(Adres adres) {
+        this.adres = adres;
+    }
+    
+    
 
     
 }
