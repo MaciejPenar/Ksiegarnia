@@ -1,0 +1,79 @@
+    <!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" type="text/css" href="/style.css" />
+    <title>Edytowanie adresu</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    
+    
+    <body>
+        
+        
+    <div id="menu">
+        <ul>
+            <li><a href="/index.html">Strona glowna</a></li>
+            <li><a href="/print_klient">Klienci</a></li>
+            <li><a href="/print_pracownik">Pracownicy</a></li>
+            <li><a href="/print_ksiazka">Ksiazki</a></li>
+            <li><a href="/print_all_zam">Zamowienia</a></li>
+            <li><a href="/print_adres">Adresy</a></li>
+        </ul>
+    </div>
+    <br/>
+    
+    <div id="info">
+    <h3>Edytowanie adresu:</h3>
+    </div>
+    <div id="formularz">
+    <form th:action="@{/edit_adres}" method="POST" th:object="${transAdres}">
+
+        <div class="form-control"> 
+            <label> ID: </label>
+            <input type="text" th:field="${adres.id_adresu}"/><br/>            
+        </div>       
+
+        <br/>
+        
+         <div class="form-control"> 
+            <label> Miejscowosc: </label>:
+            <input type="text" th:field="${adres.miejscowosc}" /><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-control"> 
+            <label>Ulica: </label>:
+            <input type="text" th:field="${adres.ulica}" /><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-control"> 
+            <label> Numer domu: </label>:
+            <input type="text" th:field="${adres.nrDomu}" /><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-control">   
+            <label> Kod pocztowy: </label>:
+            <input type="text" th:field="${adres.kodPocztowy}"/><br/>            
+        </div>       
+
+        <br/>
+
+        <input type="submit" class="edytuj" value="Edytuj" />
+
+    </form>
+        <br/>
+    </div>
+    
+    <div id="footer">
+    <p>&copy Wszelkie prawa zastrzezone. <br /></p>
+    </div>
+
+
+
+    </body>
+</html>

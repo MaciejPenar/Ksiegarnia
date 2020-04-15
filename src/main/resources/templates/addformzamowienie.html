@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Dodawanie osoby do bazy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    
+    
+    <body>
+        
+
+        
+    
+        
+    <div id="menu">
+        <ul>
+            <li><a href="/index.html">Strona glowna</a></li>
+            <li><a href="/print_klient">Klienci</a></li>
+            <li><a href="/print_pracownik">Pracownicy</a></li>
+            <li><a href="/print_ksiazka">Ksiazki</a></li>
+            <li><a href="/print_all_zam">Zamowienia</a></li>
+            <li><a href="/print_adres">Adresy</a></li>
+        </ul>
+    </div>
+    <br/>
+    
+    <div id="info">
+    <h3> Dodawanie zamowienia do bazy:</h3>
+    </div>
+
+    <br/> 
+    
+    <div id="formularz">
+        
+    <form th:action="@{/add_zam}"  method="POST" th:object="${transZamowienie}">
+        
+
+        <div class="form-group">    
+            <label> Data zamowienia: </label>
+            <input type="text" th:field="${transZamowienie.dataZamowienia}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+            <label> Data otrzymania: </label>
+            <input type="text" th:field="${transZamowienie.dataOtrzymania}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+            <label> Koszt: </label>
+            <input type="text" th:field="${transZamowienie.koszt}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+            <label> Metoda platnosci: </label>
+            <input type="text" th:field="${transZamowienie.metodaPlatnosci}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+                        <label>Klient: </label>
+                        <br/>
+                        <select class="input" name="klient" title="">
+                            <option>Klienci</option>
+                            <option  th:each="klient : ${klientList}"
+                                     th:value="${klient.id_klienta}"
+                                     th:text="${klient.id_klienta}+'. '+${klient.nazwisko}"></option>                    
+                        </select>   
+                    </div> 
+
+        <br/>
+        
+        <div class="form-group">    
+                        <label>Ksiazka: </label>
+                        <br/>
+                        <select class="input" name="ksiazka" title="">
+                            <option>Książki</option>
+                            <option  th:each="ksiazka : ${ksiazkaList}"
+                                     th:value="${ksiazka.id_ksiazki}"
+                                     th:text="${ksiazka.id_ksiazki}+'. '+${ksiazka.nazwa}"></option>                    
+                        </select>   
+                    </div> 
+
+        <br/>
+
+        <input type="submit" value="Dodaj" />
+
+    </form>
+        <br/>
+    </div>
+    
+    <div id="footer">
+    <p>&copy Wszelkie prawa zastrzezone. <br /></p>
+    </div>
+
+
+
+    </body>
+</html>

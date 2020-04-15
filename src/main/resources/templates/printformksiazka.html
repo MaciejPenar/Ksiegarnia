@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >    
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />        
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/> 
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <title>Lista ksiazek</title>               
+    </head>
+    
+    
+    <body>
+      
+    <div id="menu">
+        <ul>
+            <li><a href="/index.html">Strona glowna</a></li>
+            <li><a href="/print_klient">Klienci</a></li>
+            <li><a href="/print_pracownik">Pracownicy</a></li>
+            <li><a href="/print_ksiazka">Ksiazki</a></li>
+            <li><a href="/print_all_zam">Zamowienia</a></li>
+            <li><a href="/print_adres">Adresy</a></li>
+        </ul>
+    </div>
+            
+            <div class="container">
+            <div class="table-responsive">
+                <table id="tbl" class="table table-bordered"> 
+
+                    <thead>
+                        
+                        <tr  class="active">
+                            <th><h1>Nazwa</h1></th>  
+                            <th><h1>Autor</h1></th>  
+                            <th><h1>Gatunek</h1></th> 
+                            <th><h1>Cena</h1></th> 
+                            <th><h1>Edycja</h1></th>
+                            <th><h1>Usuwanie</h1></th>
+                        </tr>
+                        
+                    </thead>
+                    <tbody>                       
+                        <tr th:each ="ksiazka : ${ksiazkaList}">               
+                            
+                            <td> <b  th:utext="${ksiazka.nazwa}">...</b> </td>
+                            <td> <b  th:utext="${ksiazka.autor}">...</b> </td>
+                            <td> <b  th:utext="${ksiazka.gatunek}">...</b> </td> 
+                            <td> <b  th:utext="${ksiazka.cena}">...</b> </td> 
+                            <td align="center"> <a th:href="@{'/edit_ksiazka/' + ${ksiazka.id_ksiazki}}" class="buttonEdytuj">Edytuj</a> </td>
+                            <td align="center"> <a th:href="@{'/delete_ksiazka/' + ${ksiazka.id_ksiazki}}" class="buttonUsun">Usuń</a> </td>
+                                 
+                        </tr>
+
+                    </tbody>          
+                </table>    
+            </div>
+                <a href="/add_ksiazka" class="btnhref">Dodawanie ksiazki </a> </br> 
+            </div>
+            
+</body>
+</html>

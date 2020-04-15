@@ -15,46 +15,49 @@ public class Adres {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+
+    private Long id_adresu;
     private String miejscowosc;
     private String ulica;
-    private int nrDomu;
+    private String nrDomu;
     private String kodPocztowy;
 
-    @OneToMany 
-    private Set<Klient> klienci;
+    @OneToMany(mappedBy = "adres") 
+    private Set<Klient> klient;
         
-    @OneToMany 
-    private Set<Pracownik> pracownicy;
+    @OneToMany (mappedBy = "adres")
+    private Set<Pracownik> pracownik;
 
     protected Adres() {}
     
-    public Adres(Long id, String miejscowosc, String ulica, int nrDomu, String kodPocztowy) {
-        this.id = id;
+    public Adres(Long id_adresu, String miejscowosc, String ulica, String nrDomu, String kodPocztowy) {
+        this.id_adresu = id_adresu;
         this.miejscowosc = miejscowosc;
         this.ulica = ulica;
         this.nrDomu = nrDomu;     
         this.kodPocztowy = kodPocztowy;  
-        this.klienci = klienci;
-        this.pracownicy = pracownicy;
+        this.klient = new HashSet<Klient>();
+        this.pracownik = new HashSet<Pracownik>();
     }
 
-    public Adres( String miejscowosc, String ulica, int nrDomu, String kodPocztowy) {
+    public Adres( String miejscowosc, String ulica, String nrDomu, String kodPocztowy) {
         this.miejscowosc = miejscowosc;
         this.ulica = ulica;
         this.nrDomu = nrDomu;     
         this.kodPocztowy = kodPocztowy;  
-        this.klienci = klienci;
-        this.pracownicy = pracownicy;
+        this.klient = new HashSet<Klient>();
+        this.pracownik = new HashSet<Pracownik>();
     }
 
-    public Long getId() {
-        return id;
+    public Long getId_adresu() {
+        return id_adresu;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_adresu(Long id_adresu) {
+        this.id_adresu = id_adresu;
     }
+
+ 
 
     public String getMiejscowosc() {
         return miejscowosc;
@@ -72,11 +75,11 @@ public class Adres {
         this.ulica = ulica;
     }
 
-    public int getNrDomu() {
+    public String getNrDomu() {
         return nrDomu;
     }
 
-    public void setNrDomu(int nrDomu) {
+    public void setNrDomu(String nrDomu) {
         this.nrDomu = nrDomu;
     }
 
@@ -87,7 +90,20 @@ public class Adres {
     public void setKodPocztowy(String kodPocztowy) {
         this.kodPocztowy = kodPocztowy;
     }
-    
-    
 
+    public Set<Klient> getKlient() {
+        return klient;
+    }
+
+    public void setKlient(Set<Klient> klient) {
+        this.klient = klient;
+    }
+
+    public Set<Pracownik> getPracownik() {
+        return pracownik;
+    }
+
+    public void setPracownik(Set<Pracownik> pracownik) {
+        this.pracownik = pracownik;
+    }
 }

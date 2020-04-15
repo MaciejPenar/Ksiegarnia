@@ -3,10 +3,13 @@ package controler;
         
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -15,53 +18,45 @@ public class Klient {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Long id_klienta;
     private String imie;
     private String nazwisko;
     private String email;
     
 
-    @OneToMany 
-    private Set<Zamowienie> zamowienia;
+    @OneToMany (mappedBy = "klient")
+    private Set<Zamowienie> zamowienie;
     
-    @ManyToOne 
+    @ManyToOne (cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_adresu")
     private Adres adres;
 
     protected Klient() {}
 
     
-      public Klient(Long id, String imie, String nazwisko, String email) {
-        this.id = id;
+      public Klient(Long id_klienta, String imie, String nazwisko, String email, Adres adres) {
+        this.id_klienta = id_klienta;
         this.imie = imie;
         this.nazwisko = nazwisko;
-        this.email = email;        
-        zamowienia = new HashSet<Zamowienie>();
-        adres = null;
+        this.email = email;    
+        this.adres = adres;
+        zamowienie = new HashSet<Zamowienie>();
     }
     
-    public Klient(String imie, String nazwisko, String email) {
+    public Klient(String imie, String nazwisko, String email, Adres adres) {
         this.imie = imie;
         this.nazwisko = nazwisko;
-        this.email = email;        
-        zamowienia = new HashSet<Zamowienie>();
-        adres = null;
+        this.email = email;     
+        this.adres = adres;
+        zamowienie = new HashSet<Zamowienie>();
     }
 
-    public Set<Zamowienie> getZamowienia() {
-        return zamowienia;
+    public Long getId_klienta() {
+        return id_klienta;
     }
 
-    public void setZamowienia(Set<Zamowienie> zamowienia) {
-        this.zamowienia = zamowienia;
-    }
-
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_klienta(Long id_klienta) {
+        this.id_klienta = id_klienta;
     }
 
     public String getImie() {
@@ -96,12 +91,21 @@ public class Klient {
         this.adres = adres;
     }
 
+    public Set<Zamowienie> getZamowienie() {
+        return zamowienie;
+    }
+
+    public void setZamowienie(Set<Zamowienie> zamowienie) {
+        this.zamowienie = zamowienie;
+    }
+
+    
     
     
 
     @Override
     public String toString() {
-        return String.format("[%s - %s - %s - %s]", id, imie, nazwisko, email);
+        return String.format("[%s - %s - %s - %s]", id_klienta, imie, nazwisko, email);
     }
 
 }

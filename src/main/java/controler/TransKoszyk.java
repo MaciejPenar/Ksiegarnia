@@ -5,6 +5,7 @@ public class TransKoszyk
 
     private String nazwaKoszyka;
     private String nazwa;
+    private int ilosc;
 
     public TransKoszyk()
     {
@@ -12,6 +13,14 @@ public class TransKoszyk
         this.nazwa="";
     }
 
+    public int getIlosc() {
+        return ilosc;
+    }
+
+    public void setIlosc(int ilosc) {
+        this.ilosc = ilosc;
+    }
+    
     public String getNazwaKoszyka() {
         return nazwaKoszyka;
     }

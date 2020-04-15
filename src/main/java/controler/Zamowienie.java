@@ -3,9 +3,12 @@ package controler;
 import java.util.HashSet;
 import javax.persistence.Entity;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -15,58 +18,60 @@ public class Zamowienie {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
+    private Long id_zamowienia;
     private String dataZamowienia;
     private String dataOtrzymania;
     private int koszt;
     private String metodaPlatnosci;
     
-    @ManyToOne 
+    @ManyToOne (cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_klienta")
     private Klient klient;
     
-    @ManyToOne 
+    @ManyToOne (cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_pracownika")
     private Pracownik pracownik;
     
-   @OneToMany(mappedBy = "ksiazka") 
-    private Set<Ksiazka> ksiazki;
+   @OneToMany(mappedBy = "zamowienie")
+    private Set<Ksiazka> ksiazka;
     
      protected Zamowienie() {}
 
-       public Zamowienie(Long id, String dataZamowienia, String dataOtrzymania, int koszt, String metodaPlatnosci, Klient klient, Ksiazka ksiazka) {
-        this.id = id;
+       public Zamowienie(Long id_zamowienia, String dataZamowienia, String dataOtrzymania, int koszt, String metodaPlatnosci,Klient klient, Ksiazka ksiazka) {
+        this.id_zamowienia = id_zamowienia;
         this.dataZamowienia = dataZamowienia;
         this.dataOtrzymania = dataOtrzymania;
         this.koszt = koszt;
         this.metodaPlatnosci = metodaPlatnosci;
         this.klient = klient;
-        pracownik = null;
-        this.ksiazki = ksiazki;
+        this.pracownik = pracownik;
+        this.ksiazka = new HashSet<Ksiazka>();
     }
      
-    public Zamowienie(String dataZamowienia, String dataOtrzymania, int koszt, String metodaPlatnosci, Klient klient, Ksiazka ksiazka) {
+    public Zamowienie(String dataZamowienia, String dataOtrzymania, int koszt, String metodaPlatnosci,Klient klient, Ksiazka ksiazka) {
         this.dataZamowienia = dataZamowienia;
         this.dataOtrzymania = dataOtrzymania;
         this.koszt = koszt;
         this.metodaPlatnosci = metodaPlatnosci;
         this.klient = klient;
-        pracownik = null;
-        this.ksiazki = ksiazki;
+        this.pracownik = pracownik;
+        this.ksiazka = new HashSet<Ksiazka>();
     }
 
-    public Set<Ksiazka> getKsiazki() {
-        return ksiazki;
+       public Zamowienie(Long id_zamowienia, String dataZamowienia, String dataOtrzymania, int koszt, String metodaPlatnosci) {
+        this.id_zamowienia = id_zamowienia;
+        this.dataZamowienia = dataZamowienia;
+        this.dataOtrzymania = dataOtrzymania;
+        this.koszt = koszt;
+        this.metodaPlatnosci = metodaPlatnosci;
     }
 
-    public void setKsiazki(Set<Ksiazka> ksiazki) {
-        this.ksiazki = ksiazki;
+    public Long getId_zamowienia() {
+        return id_zamowienia;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_zamowienia(Long id_zamowienia) {
+        this.id_zamowienia = id_zamowienia;
     }
 
     public String getDataZamowienia() {
@@ -116,10 +121,20 @@ public class Zamowienie {
     public void setKlient(Klient klient) {
         this.klient = klient;
     }
+
+    public Set<Ksiazka> getKsiazka() {
+        return ksiazka;
+    }
+
+    public void setKsiazka(Set<Ksiazka> ksiazka) {
+        this.ksiazka = ksiazka;
+    }
+    
+    
     
     @Override
     public String toString() {
-        return String.format("[%s - %s - %s - %s - %s - %s]", id, dataZamowienia, dataOtrzymania, koszt, metodaPlatnosci);
+        return String.format("[%s - %s - %s - %s - %s - %s]", id_zamowienia, dataZamowienia, dataOtrzymania, koszt, metodaPlatnosci);
     }
     
 }

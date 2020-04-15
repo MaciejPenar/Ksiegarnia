@@ -1,25 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controler;
 
 public class TransKsiazka {
     
-    private String id;
+
+    private Long id_ksiazki;
     private String nazwa;  
+    private String autor;
     private String gatunek;
-    private String scena;
+    private int cena;
     private String dataZamowienia;  
     private String dataOtrzymania;
-
-    public String getId() {
-        return id;
+    
+public TransKsiazka()
+    {
+        this.nazwa = "";
+        this.autor = "";
+        this.gatunek = "";
+        this.cena = 0;
+        this.dataZamowienia = "";
+        this.dataOtrzymania = "";
+        this.id_ksiazki = null;
+    }
+    
+    
+    public long getId_ksiazki() {
+        return id_ksiazki;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId_ksiazki(long id_ksiazki) {
+        this.id_ksiazki = id_ksiazki;
     }
 
 
@@ -39,14 +48,8 @@ public class TransKsiazka {
         this.gatunek = gatunek;
     }
 
-    public String getScena() {
-        return scena;
-    }
 
-    public void setScena(String scena) {
-        this.scena = scena;
-    }
-
+    
     public String getDataZamowienia() {
         return dataZamowienia;
     }
@@ -62,6 +65,25 @@ public class TransKsiazka {
     public void setDataOtrzymania(String dataOtrzymania) {
         this.dataOtrzymania = dataOtrzymania;
     }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public int getCena() {
+        return cena;
+    }
+
+    public void setCena(int cena) {
+        this.cena = cena;
+    }
+
+
+
     
     
 }

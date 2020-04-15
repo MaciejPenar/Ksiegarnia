@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <title>Edytowanie zamowienia</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="/style.css" />
+        <meta charset="windows-1250">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    
+    <body>
+        
+    <h2> Edytowanie zamowienia w bazie:</h2>
+        
+    <div id="menu">
+        <ul>
+            <li><a href="/index.html">Strona glowna</a></li>
+            <li><a href="/print_klient">Klienci</a></li>
+            <li><a href="/print_pracownik">Pracownicy</a></li>
+            <li><a href="/print_ksiazka">Ksiazki</a></li>
+            <li><a href="/print_all_zam">Zamowienia</a></li>
+            <li><a href="/print_adres">Adresy</a></li>
+        </ul>
+    </div>
+        <br/>
+    
+    <div id="info">
+    <h3>Edytowanie zamowienia:</h3>
+    </div>
+    <br/>
+    <div id="formularz">
+    <form th:action="@{/edit_zam}" method="POST" th:object="${transZamowienie}">
+
+        <div class="form-control"> 
+            <label> ID: </label>
+            <input type="text" th:field="${zamowienie.id_zamowienia}"/><br/>            
+        </div>       
+
+        <br/>
+        
+         <div class="form-control"> 
+            <label> Data zamowienia: </label>:
+            <input type="text" th:field="${zamowienie.dataZamowienia}" /><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-control"> 
+            <label> Data otrzymania: </label>:
+            <input type="text" th:field="${zamowienie.dataOtrzymania}" /><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-control"> 
+            <label> Koszt: </label>:
+            <input type="text" th:field="${zamowienie.koszt}" /><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-control"> 
+            <label> Metoda platnosci: </label>:
+            <input type="text" th:field="${zamowienie.metodaPlatnosci}" /><br/>            
+        </div>       
+
+        <br/>
+        
+        
+        <div class="form-group">    
+                        <label>Klient: </label>
+                        <br/>
+                        <select class="input" name="klient" title="">
+                            <option>Klienci</option>
+                            <option  th:each="klient : ${klientList}"
+                                     th:value="${klient.id_klienta}"
+                                     th:text="${klient.id_klienta}+'. '+${klient.nazwisko}"></option>                    
+                        </select>   
+                    </div> 
+
+        <br/>
+        
+        <div class="form-group">    
+                        <label>Ksiazka: </label>
+                        <br/>
+                        <select class="input" name="ksiazka" title="">
+                            <option>Książki</option>
+                            <option  th:each="ksiazka : ${ksiazkaList}"
+                                     th:value="${ksiazka.id_ksiazki}"
+                                     th:text="${ksiazka.id_ksiazki}+'. '+${ksiazka.nazwa}"></option>                    
+                        </select>   
+                    </div> 
+
+        <br/>
+
+        <input type="submit" class="edytuj" value="Edytuj" />
+
+    </form>
+        <br/>
+    </div>
+    
+    <div id="footer">
+    <p>&copy Wszelkie prawa zastrzezone. <br /></p>
+    </div>
+
+
+
+    </body>
+</html>

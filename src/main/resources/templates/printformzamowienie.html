@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >    
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />        
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="style.css" />           
+        <title>Lista zamowien</title>               
+    </head>
+    
+    
+    <body>
+      
+    <div id="menu">
+        <ul>
+            <li><a href="/index.html">Strona glowna</a></li>
+            <li><a href="/print_klient">Klienci</a></li>
+            <li><a href="/print_pracownik">Pracownicy</a></li>
+            <li><a href="/print_ksiazka">Ksiazki</a></li>
+            <li><a href="/print_all_zam">Zamowienia</a></li>
+            <li><a href="/print_adres">Adresy</a></li>
+        </ul>
+    </div>
+            <div class="container">
+            <div class="table-responsive">
+                <table id="tbl" class="table table-bordered"> 
+
+                    <thead>
+                        
+                        <tr  class="active">
+                            <th><h1>Data zamowienia</h1></th>  
+                            <th><h1>Data otrzymania</h1></th>  
+                            <th><h1>Koszt</h1></th> 
+                            <th><h1>Metoda platnosci</h1></th> 
+                            <th><h1>Edycja</h1></th>
+                            <th><h1>Usuwanie</h1></th>
+                        </tr>
+                        
+                    </thead>
+                    <tbody>                       
+                        <tr th:each ="zamowienie : ${zamowienieList}">               
+                            
+                            <td> <b  th:utext="${zamowienie.dataZamowienia}">...</b> </td>
+                            <td> <b  th:utext="${zamowienie.dataOtrzymania}">...</b> </td>
+                            <td> <b  th:utext="${zamowienie.koszt}">...</b> </td> 
+                            <td> <b  th:utext="${zamowienie.metodaPlatnosci}">...</b> </td> 
+                            <td align="center"> <a th:href="@{'/edit_zam/' + ${zamowienie.id_zamowienia}}" class="buttonEdytuj">Edytuj</a> </td>
+                            <td align="center"> <a th:href="@{'/delete_zam/' + ${zamowienie.id_zamowienia}}" class="buttonUsun">Usuń</a> </td>
+
+                                 
+                        </tr>
+
+                    </tbody>          
+                </table>
+                      <h3> <a href="/add_zam">Dodaj zamowienie </a></h3>
+            </div>
+            </div>
+            
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Strona logowania</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+
+    <body>
+
+        <div id="info">
+        <h2>Logowanie</h2>
+        </div>
+  
+       
+
+        <br/>
+        
+        <div id="singin">
+            <form th:action="@{/login}" method="post">
+                <div><input type="text" placeholder="użytkownik" name="username"/></div> <br/>
+                <div><input type="password" placeholder="hasło" name="password"/></div> <br/>
+                <div><input type="submit" value="Zaloguj"/></div>
+            </form>
+            <br/><br/>
+             <div th:if="${param.error}">
+            Błędna nazwa użytkownika lub hasło.
+        </div>
+
+        <div th:if="${param.logout}">
+            Wylogowałeś się. Możesz zalogować się ponownie.
+        </div>
+        </div>
+        
+        <br/>
+        
+        
+        <div id="link">
+        <a href="/home">Strona główna </a> 
+        </div>
+        
+    </body>
+</html>
+

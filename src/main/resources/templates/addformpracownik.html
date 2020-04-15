@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Dodawanie osoby do bazy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    
+    <body>
+        
+
+        
+    <div id="menu">
+        <ul>
+            <li><a href="/index.html">Strona glowna</a></li>
+            <li><a href="/print_klient">Klienci</a></li>
+            <li><a href="/print_pracownik">Pracownicy</a></li>
+            <li><a href="/print_ksiazka">Ksiazki</a></li>
+            <li><a href="/print_all_zam">Zamowienia</a></li>
+            <li><a href="/print_adres">Adresy</a></li>
+        </ul>
+    </div>
+        
+    <br/>
+    
+    <div id="info">
+    <h3> Dodawanie pracownika do bazy:</h3>
+    </div>
+    
+    <div id="formularz">
+    <form th:action="@{/add_pracownik}"  method="POST" th:object="${transPracownik}">
+
+        <div class="form-group">    
+            <label> Imie: </label>
+            <input type="text" th:field="${transPracownik.imie}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+            <label> Nazwisko: </label>
+            <input type="text" th:field="${transPracownik.nazwisko}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+            <label> Telefon: </label>
+            <input type="text" th:field="${transPracownik.telefon}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+            <label> Stanowisko: </label>
+            <input type="text" th:field="${transPracownik.stanowisko}" value=""/><br/>            
+        </div> 
+        
+        <br/>
+        
+         <div class="form-group">    
+                        <label>Adres: </label>
+                        <br/>
+                        <select class="input" name="adres" title="">
+                            <option>Adresy</option>
+                            <option  th:each="adres : ${adresList}"
+                                     th:value="${adres.id_adresu}"
+                                     th:text="${adres.id_adresu}+'. '+${adres.miejscowosc}"></option>                    
+                        </select>   
+                    </div> 
+
+        <br/>
+
+        <input type="submit" value="Dodaj" />
+
+    </form>
+        <br/>
+    </div>
+    
+    <div id="footer">
+    <p>&copy Wszelkie prawa zastrzezone. <br /></p>
+    </div>
+
+
+
+    </body>
+</html>

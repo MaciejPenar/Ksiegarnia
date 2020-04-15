@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title>Edytowanie klienta</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="/style.css" />
+        <meta charset="windows-1250">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    
+    <body>
+    
+	  
+    <div id="menu">
+        <ul>
+            <li><a href="/index.html">Strona glowna</a></li>
+            <li><a href="/print_klient">Klienci</a></li>
+            <li><a href="/print_pracownik">Pracownicy</a></li>
+            <li><a href="/print_ksiazka">Ksiazki</a></li>
+            <li><a href="/print_all_zam">Zamowienia</a></li>
+            <li><a href="/print_adres">Adresy</a></li>
+        </ul>
+    </div>
+<br/>
+	<div id="info">
+    <h2> Edytowanie klienta w bazie:</h2>
+    </div>  
+    
+    <div id="formularz">
+    <form th:action="@{/edit_klient}" method="POST" th:object="${transKlient}">
+
+        <div class="form-control"> 
+            <label> ID: </label>
+            <input type="text" th:field="${klient.id_klienta}" class="input"/><br/>            
+        </div>       
+
+        <br/>
+        
+         <div class="form-control"> 
+            <label> Imie: </label>:
+            <input type="text" th:field="${klient.imie}" class="input"  /><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-control"> 
+            <label>Nazwisko: </label>:
+            <input type="text" th:field="${klient.nazwisko}" class="input"  /><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-control"> 
+            <label> E-mail: </label>:
+            <input type="text" th:field="${klient.email}" class="input"  /><br/>            
+        </div>   
+        
+        <br/>
+
+         <div class="form-group">    
+                        <label>Adres: </label>
+                        <br/>
+                        <select class="input" name="adres" title="">
+                            <option>Adresy</option>
+                            <option  th:each="adres : ${adresList}"
+                                     th:value="${adres.id_adresu}"
+                                     th:text="${adres.id_adresu}+'. '+${adres.miejscowosc}"></option>                    
+                        </select>   
+                    </div> 
+
+        <br/>
+
+        <input type="submit" class="edytuj" value="Edytuj" />
+
+    </form>
+        <br/>
+    </div>
+    
+    <div id="footer">
+    <p>&copy Wszelkie prawa zastrzezone. <br /></p>
+    </div>
+
+
+
+    </body>
+</html>

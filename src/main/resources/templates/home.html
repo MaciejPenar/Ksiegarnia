@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Powitanie</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    
+    <body>
+        <div id="info">
+        <h2>Witamy w naszej firmie!</h2>
+        </div>
+        
+        <div id="home">
+        <p>Strona klienta <a th:href="@{/client}">tutaj</a>.</p>
+        
+        <p/>
+
+        <p>Strona pracownika <a th:href="@{/staff}">tutaj</a>.
+        
+        </p>
+        
+        <p>Strona administratora <a th:href="@{/admin}">tutaj</a>.
+        
+        </p>
+        
+        </div>
+        
+        <p/><p/>
+        
+        <div id="footer"
+        
+        <p><i>To jest demonstracja autoryzacji w oparciu o dane użytkowników z bazy PostgreSQL. </i></p>
+                
+        <footer>
+            <p>&copy; 2018 Firma S.A.</p>
+        </footer>
+           
+        </div>
+
+
+    </body>
+</html>

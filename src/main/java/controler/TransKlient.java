@@ -2,25 +2,19 @@ package controler;
 
 public class TransKlient
 {
-    private String id;
     private String imie;
     private String nazwisko;
     private String email;
+    private Long id_klienta;
 
     public TransKlient()
     {
         this.imie = "";
         this.nazwisko = "";
         this.email = "";
+        this.id_klienta = null;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getImie() {
         return imie;
@@ -44,6 +38,14 @@ public class TransKlient
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Long getId_klienta() {
+        return id_klienta;
+    }
+
+    public void setId_klienta(Long id_klienta) {
+        this.id_klienta = id_klienta;
     }
 
 

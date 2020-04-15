@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Strona bledu</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <meta charset="windows-1250">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            p {
+	font-family: Arial;
+	font-size: 12px;
+	color: #666;
+	text-align: center;
+	margin: 0;
+}
+        </style>
+    </head>
+<body>
+    
+   <div id="menu">
+        <ul>
+            <li><a href="/index.html">Strona glowna</a></li>
+            <li><a href="/print_klient">Klienci</a></li>
+            <li><a href="/print_pracownik">Pracownicy</a></li>
+            <li><a href="/print_ksiazka">Ksiazki</a></li>
+            <li><a href="/print_all_zam">Zamowienia</a></li>
+            <li><a href="/print_adres">Adresy</a></li>
+        </ul>
+    </div>
+    
+    <br/>
+    <br/>
+    <br/>
+<h2>Wystąpił błąd</h2>
+
+<p th:text="'Opis błędu:' + ${errormessage}" />
+
+</body>
+</html>

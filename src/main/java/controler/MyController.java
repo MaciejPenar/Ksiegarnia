@@ -1,10 +1,13 @@
 package controler;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
@@ -17,57 +20,30 @@ public class MyController {
     @Autowired
     KsiazkaRepository ksiazkaRepository;
     @Autowired
-    AutorRepository autorRepository;
-    @Autowired
-    GatunekRepository gatunekRepository;
-    @Autowired
     PracownikRepository pracownikRepository;
     @Autowired
     AdresRepository adresRepository;
+    @Autowired
+    KoszykRepository koszykRepository;
  
+    
+    @RequestMapping("/admin")
+    public String adminPage() {        
+        return "admin"; //Przekierowanie do strony admin.html
+    }
+    
+    @RequestMapping("/staf")
+    public String staffPage() {        
+        return "staf"; //Przekierowanie do strony staf.html
+    }
+    
+    @RequestMapping("/client")
+    public String clientPage() {        
+        return "client"; //Przekierowanie do strony client.html
+    }
+
+    
 //------------------------------------------    WYSWIETLANIE    ------------------------------------------\\
-    
-//--------- WYSWIETLANIE AUTOROW ---------\\
-         
-    @RequestMapping(value = "/print_autor", method = RequestMethod.GET)
-    public String printAllAutor(Model model)
-    {
-        List<Autor> autorList =  autorRepository.findAll(); 
-             
-        try
-        {
-            
-
-        model.addAttribute("header","Lista wszystkich autorow"); //Dodanie obiektu do pamieci lokalnej modelu
-        model.addAttribute("autorList",autorList); //Dodanie obiektu do pamieci lokalnej modelu
-        
-        } catch (Exception e)
-        { return "errorautor";
-                }
-        
-        return "printformautor"; //Przekierowanie na strone 
-
-    }
-    
-//--------- WYSWIETLANIE GATUNKOW ---------\\
-         
-    @RequestMapping(value = "/print_gatunek", method = RequestMethod.GET)
-    public String printAllGatunek(Model model)
-    {
-        List<Gatunek> gatunekList =  gatunekRepository.findAll(); 
-            
-        try{
-        
-        model.addAttribute("header","Lista wszystkich gatunekow"); //Dodanie obiektu do pamieci lokalnej modelu
-        model.addAttribute("wydawnictwoList",gatunekList); //Dodanie obiektu do pamieci lokalnej modelu
-        
-        } catch (Exception e)
-        { return "errorgatunek";
-                }
-        
-        return "printformgatunek"; //Przekierowanie na strone 
-
-    }
     
 //--------- WYSWIETLANIE KSIAZEK ---------\\
     
@@ -159,7 +135,7 @@ public class MyController {
         {
                    
         model.addAttribute("header","Lista wszystkich adresow"); //Dodanie obiektu do pamieci lokalnej modelu
-        model.addAttribute("klientList",adresList); //Dodanie obiektu do pamieci lokalnej modelu
+        model.addAttribute("adresList",adresList); //Dodanie obiektu do pamieci lokalnej modelu
         
         } catch (Exception e)
         { return "erroradres";
@@ -167,72 +143,39 @@ public class MyController {
         
         return "printformadres"; //Przekierowanie na strone 
 
-    }      
+    }    
+    
+    //--------- WYSWIETLANIE KOSZYKA ---------\\
+         
+  @RequestMapping(value = "/print_koszyk", method = RequestMethod.GET)
+    public String printKoszyk(Model model)
+    {
+        List<Koszyk> koszykList =  koszykRepository.findAll(); 
+        try
+        {
+                   
+        model.addAttribute("header","Lista wszystkich koszykow"); //Dodanie obiektu do pamieci lokalnej modelu
+        model.addAttribute("koszykList",koszykList); //Dodanie obiektu do pamieci lokalnej modelu
+        
+        } catch (Exception e)
+        { return "errorkoszyk";
+                }
+        
+        return "printformkoszyk"; //Przekierowanie na strone 
+
+    } 
+
+
+
     
 //------------------------------------------    DODAWANIE    ------------------------------------------\\
-
-
-//--------- DODAWANIE AUTORA ---------\\
-    
-        @RequestMapping("/add_autor")
-    public String addAutor(Model model)
-    {       
-        TransAutor transAutor = new TransAutor();                
-        model.addAttribute("transAutor", transAutor);         
-        return "addformautor";  
-    }
-    
-        @RequestMapping(value = "/add_autor", method = RequestMethod.POST)
-    public String addAutor(Model model,TransAutor transAutor)
-    {
-        String imie = transAutor.getImie();
-        String nazwisko = transAutor.getNazwisko();
-           
-        try
-        {     
-        autorRepository.save(new Autor(imie,nazwisko));
-        
-        model.addAttribute("header", "Wynik"); 
-        model.addAttribute("message","Wstawiono do bazy autora: "+imie+" "+nazwisko); 
-        } catch (Exception e)
-        { return "errorautor";
-                }
-        return "viewmessageautor";                
-    }
-    
-//--------- DODAWANIE GATUNKU ---------\\
-    
-        @RequestMapping("/add_gatunek")
-    public String addGatunek(Model model)
-    {       
-        TransGatunek transGatunek = new TransGatunek();                
-        model.addAttribute("transGatunek", transGatunek);         
-        return "addformgatunek";  
-    }
-    
-        @RequestMapping(value = "/add_gatunek", method = RequestMethod.POST)
-    public String addGatunek(Model model,TransGatunek transGatunek)
-    {
-        String nazwa = transGatunek.getNazwa();
-
-        try
-        {          
-        gatunekRepository.save(new Gatunek(nazwa));
-        
-        model.addAttribute("header", "Wynik"); 
-        model.addAttribute("message","Wstawiono do bazy gatunek o nazwie: "+nazwa); 
-        } catch (Exception e)
-        { return "errorwydawnictwo";
-                }
-        return "viewmessagegatunek";                
-    }  
     
 //--------- DODAWANIE KSIAZKI ---------\\
     
         @RequestMapping("/add_ksiazka")
     public String addKsiazka(Model model)
     {       
-        TransKsiazka transKsiazka = new TransKsiazka();                
+       TransKsiazka transKsiazka = new TransKsiazka();                
         model.addAttribute("transKsiazka", transKsiazka);         
         return "addformksiazka";  
     }
@@ -241,102 +184,82 @@ public class MyController {
     public String addKsiazka(Model model,TransKsiazka transKsiazka)
     {
         String nazwa = transKsiazka.getNazwa();
+        String autor = transKsiazka.getAutor();
         String gatunek = transKsiazka.getGatunek();
-        String scena = transKsiazka.getScena();
-        int cena = Integer.parseInt(scena);
-        
-        try
-        {           
-        ksiazkaRepository.save(new Ksiazka(nazwa,gatunek,cena));
+        int cena = transKsiazka.getCena();
+               
+        ksiazkaRepository.save(new Ksiazka(nazwa,autor,gatunek,cena));
         
         model.addAttribute("header", "Wynik"); 
         model.addAttribute("message","Wstawiono do bazy ksiazke: "+nazwa+" gatunek: "+gatunek); 
-        } catch (Exception e)
-        { return "errorksiazka";
-                }
+
         return "viewmessageksiazka";                
     }    
     
 //--------- DODAWANIE ZAMOWIENIA ---------\\
-    
-    @RequestMapping("/add_zam")
-    public String addZam(Model model)
+ 
+@RequestMapping("/add_zam")
+    public String addZamowienie(Model model)
     {       
-        TransZamowienie transData = new TransZamowienie();                
-        model.addAttribute("transData", transData);         
-        return "addformzam";  
+        TransZamowienie transZamowienie = new TransZamowienie();                
+        model.addAttribute("transZamowienie", transZamowienie);  
+        ArrayList<Klient> klient = (ArrayList<Klient>)klientRepository.findAll();
+        model.addAttribute("klientList",klient);
+        ArrayList<Ksiazka> ksiazka = (ArrayList<Ksiazka>)ksiazkaRepository.findAll();
+        model.addAttribute("ksiazkaList",ksiazka);
+        return "addformzamowienie";  
     }
     
-    @RequestMapping(value = "/add_zam", method = RequestMethod.POST)
-    public String addZam(Model model,TransZamowienie transData)
+        @RequestMapping(value = "/add_zam", method = RequestMethod.POST)
+    public String addZamowienie(Model model,TransZamowienie transZamowienie, Klient klient, Ksiazka ksiazka)
     {
-        String dataZamowienia = transData.getDataZamowienia();
-        String dataOtrzymania = transData.getDataOtrzymania();
-        String skoszt = transData.getSkoszt();
-        int koszt = Integer.parseInt(skoszt);
-        String metodaPlatnosci = transData.getMetodaPlatnosci();
+        String dataZamowienia = transZamowienie.getDataZamowienia();
+        String dataOtrzymania = transZamowienie.getDataOtrzymania();
+        int koszt = transZamowienie.getKoszt();
+        String metodaPlatnosci = transZamowienie.getMetodaPlatnosci();
+        Long id_klienta = klient.getId_klienta();
+        Long id_ksiazki = ksiazka.getId_ksiazki();
         
-        String imie = transData.getImie();
-        String nazwisko = transData.getNazwisko();
-        String nazwa = transData.getNazwa();
-       
-        List<Klient> klientList = klientRepository.findByImieAndNazwisko(imie,nazwisko);
+        Klient klient1 = klientRepository.findById(id_klienta).get();
+        Ksiazka ksiazka1 = ksiazkaRepository.findById(id_ksiazki).get();
         
         try
-        {  
-        
-        if (klientList.size()==0)
-        {         
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Nie ma klienta: "+imie+" "+nazwisko); 
-            return "errorzam";                
-        }
-        
-        List<Ksiazka> ksiazkaList = ksiazkaRepository.findByNazwa(nazwa);
-        
-        if (ksiazkaList.size()==0)
-        {         
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Nie ma ksiazki o nazwie: "+nazwa); 
-            return "errorzam";                
-        }
-        
-        Klient klient = klientList.get(0);     
-        Ksiazka ksiazka = ksiazkaList.get(0);  
-        zamowienieRepository.save(new Zamowienie(dataZamowienia,dataOtrzymania,koszt,metodaPlatnosci,klient,ksiazka));
+        {
+        zamowienieRepository.save(new Zamowienie(dataZamowienia,dataOtrzymania,koszt,metodaPlatnosci, klient1, ksiazka1));
         
         model.addAttribute("header", "Wynik"); 
-        model.addAttribute("message","Wstawiono do bazy zamowienie dla klienta: "+imie+" "+nazwisko);
-        
+        model.addAttribute("message","Wstawiono! Data zamówienia: "+dataZamowienia+" data otrzymania: "+dataOtrzymania); 
         } catch (Exception e)
         { return "errorzam";
                 }
-        
         return "viewmessagezam";                
-    }
-    
+    }    
 //--------- DODAWANIE PRACOWNIKA ---------\\
     
         @RequestMapping("/add_pracownik")
     public String addPracownik(Model model)
     {       
         TransPracownik transPracownik = new TransPracownik();                
-        model.addAttribute("transPracownik", transPracownik);         
+        model.addAttribute("transPracownik", transPracownik);  
+        ArrayList<Adres> adres = (ArrayList<Adres>)adresRepository.findAll();
+        model.addAttribute("adresList",adres);
         return "addformpracownik";  
     }
     
         @RequestMapping(value = "/add_pracownik", method = RequestMethod.POST)
-    public String addPracownik(Model model,TransPracownik transPracownik)
+    public String addPracownik(Model model,TransPracownik transPracownik, Adres adres)
     {
         String imie = transPracownik.getImie();
         String nazwisko = transPracownik.getNazwisko();
-        String stelefon = transPracownik.getStelefon();
-        int telefon = Integer.parseInt(stelefon);
+        int telefon = transPracownik.getTelefon();
         String stanowisko = transPracownik.getStanowisko();
+        Long id = adres.getId_adresu();
+        
+        Adres adres1 = adresRepository.findById(id).get();
         
         try
         {
-        pracownikRepository.save(new Pracownik(imie,nazwisko,telefon,stanowisko));
+        pracownikRepository.save(new Pracownik(imie,nazwisko,telefon,stanowisko, adres1));
         
         model.addAttribute("header", "Wynik"); 
         model.addAttribute("message","Wstawiono do bazy pracwonika: "+imie+" "+nazwisko); 
@@ -352,20 +275,25 @@ public class MyController {
     public String addKlient(Model model)
     {       
         TransKlient transKlient = new TransKlient();                
-        model.addAttribute("transKlient", transKlient);         
+        model.addAttribute("transKlient", transKlient);   
+        ArrayList<Adres> adres = (ArrayList<Adres>)adresRepository.findAll();
+        model.addAttribute("adresList",adres);
         return "addformklient";  
     }
     
         @RequestMapping(value = "/add_klient", method = RequestMethod.POST)
-    public String addKlient(Model model,TransKlient transKlient)
+    public String addKlient(Model model,TransKlient transKlient, Adres adres)
     {
         String imie = transKlient.getImie();
         String nazwisko = transKlient.getNazwisko();
         String email = transKlient.getEmail();
+        Long id = adres.getId_adresu();
+        
+        Adres adres1 = adresRepository.findById(id).get();
         
         try
         {
-        klientRepository.save(new Klient(imie,nazwisko,email));
+        klientRepository.save(new Klient(imie,nazwisko,email,adres1));
         
         model.addAttribute("header", "Wynik"); 
         model.addAttribute("message","Wstawiono do bazy klienta: "+imie+" "+nazwisko); 
@@ -390,13 +318,12 @@ public class MyController {
     {
         String miejscowosc = transAdres.getMiejscowosc();
         String ulica = transAdres.getUlica();
-        String snrDomu = transAdres.getSnrDomu();
-        int nrDomu = Integer.parseInt(snrDomu);
+        String nrDomu = transAdres.getnrDomu();
         String kodPocztowy = transAdres.getKodPocztowy();
         
         try
         {
-        pracownikRepository.save(new Pracownik(miejscowosc,ulica,nrDomu,kodPocztowy));
+        adresRepository.save(new Adres(miejscowosc,ulica,nrDomu,kodPocztowy));
         
         model.addAttribute("header", "Wynik"); 
         model.addAttribute("message","Wstawiono do bazy adres: "+miejscowosc+" "+ulica); 
@@ -407,377 +334,101 @@ public class MyController {
     }
 
     
+    
+    
 //------------------------------------------    USUWANIE    ------------------------------------------\\
     
-//--------- USUWANIE AUTORA ---------\\
-        
-        @RequestMapping("/delete_autor")
-    public String deleteAutor(Model model)
-    {       
-        TransAutor transAutor = new TransAutor();                
-        model.addAttribute("transAutor", transAutor);         
-        return "deleteformautor";  
-    }
-    
-    @RequestMapping(value = "/delete_autor", method = RequestMethod.POST)
-    public String deleteAutor(Model model,TransAutor transAutor)
-    {
-        String imie = transAutor.getImie();
-        String nazwisko = transAutor.getNazwisko();
-        
-        List<Autor> autorList = autorRepository.findByImieAndNazwisko(imie,nazwisko);
-        
-        try{
-        if (autorList.size()==0)
-        {         
-            model.addAttribute("errormessage","Nie ma osoby: "+imie+" "+nazwisko); 
-            return "errorautor";                
-        }
-        else
-        {        
-            long id = autorList.get(0).getId();
-            autorRepository.deleteById(id);
-
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto autora: "+imie+" "+nazwisko); 
-            return "viewmessageautor";                
-        }
-         } catch (Exception e)
-        { return "errorautor";
-                }
-    }
-    
-//--------- USUWANIE GATUNKU ---------\\
-        
-        @RequestMapping("/delete_gatunek")
-    public String deleteGatunek(Model model)
-    {       
-        TransGatunek transGatunek = new TransGatunek();                
-        model.addAttribute("transGatunek", transGatunek);         
-        return "deleteformgatunek";  
-    }
-    
-    @RequestMapping(value = "/delete_gatunek", method = RequestMethod.POST)
-    public String deleteGatunek(Model model,TransGatunek transGatunek)
-    {
-        String nazwa = transGatunek.getNazwa();
-        
-        List<Gatunek> gatunekList = gatunekRepository.findByNazwa(nazwa);
-        
-        try{
-        if (gatunekList.size()==0)
-        {         
-            model.addAttribute("errormessage","Nie ma gatuneku: "+nazwa); 
-            return "errorgatunek";                
-        }
-        else
-        {        
-            long id = gatunekList.get(0).getId();
-            gatunekRepository.deleteById(id);
-
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto gatunek: "+nazwa); 
-            return "viewmessagegatunek";                
-        }
-        } catch (Exception e)
-        { return "errorgatunek";
-                }
-    }
     
 //--------- USUWANIE KSIAZKI ---------\\
-        
-        @RequestMapping("/delete_ksiazka")
-    public String deleteKsiazka(Model model)
-    {       
-        TransKsiazka transKsiazka = new TransKsiazka();                
-        model.addAttribute("transKsiazka", transKsiazka);         
-        return "deleteformksiazka";  
-    }
-    
-    @RequestMapping(value = "/delete_ksiazka", method = RequestMethod.POST)
-    public String deleteKsiazka(Model model,TransKsiazka transKsiazka)
-    {
-        String nazwa = transKsiazka.getNazwa();
-        String gatunek = transKsiazka.getGatunek();
-        
-        List<Ksiazka> ksiazkaList = ksiazkaRepository.findByNazwaAndGatunek(nazwa, gatunek);
-        
-        try{
-        if (ksiazkaList.size()==0)
-        {         
-            model.addAttribute("errormessage","Nie ma ksiazki: "+nazwa+" "+gatunek); 
-            return "errorksiazka";                
-        }
-        else
-        {        
-            long id = ksiazkaList.get(0).getId();
-            ksiazkaRepository.deleteById(id);
 
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto ksiazke: "+nazwa+" "+gatunek); 
-            return "viewmessageksiazka";                
-        }
-        } catch (Exception e)
-        { return "errorksiazka";
-                }
+    @RequestMapping("/delete_ksiazka/{id_ksiazki}")
+    public String deleteKsiazka(@PathVariable("id_ksiazki")long id, Model model,Ksiazka ksiazka, TransKsiazka transKsiazka) {
+     
+        ksiazkaRepository.deleteById(ksiazka.getId_ksiazki());  
+        String nazwa = transKsiazka.getNazwa();
+        
+    model.addAttribute("message","Usuniêto ksi¹¿kê o nazwie: "+nazwa); 
+    return "redirect:/print_ksiazka"; 
     }
     
 //--------- USUWANIE ZAMOWIENIA ---------\\
         
-        @RequestMapping("/delete_zamowienie")
-    public String deleteZamowienie(Model model)
-    {       
-        TransZamowienie transZamowienie = new TransZamowienie();                
-        model.addAttribute("transZamowienie", transZamowienie);         
-        return "deleteformzamowienie";  
-    }
-    
-    @RequestMapping(value = "/delete_zamowienie", method = RequestMethod.POST)
-    public String deleteZamowienie(Model model,TransZamowienie transZamowienie)
-    {
+    @RequestMapping("/delete_zam/{id_zamowienia}")
+    public String deleteZamowienie(@PathVariable("id_zamowienia")long id, Model model,Zamowienie zamowienie, TransZamowienie transZamowienie) {
+     
+        zamowienieRepository.deleteById(zamowienie.getId_zamowienia());  
         String dataZamowienia = transZamowienie.getDataZamowienia();
+        String dataOtrzymania = transZamowienie.getDataOtrzymania();
         
-        List<Zamowienie> zamowienieList = zamowienieRepository.findByDataZamowienia(dataZamowienia);
-        
-        try{
-        if (zamowienieList.size()==0)
-        {          
-            model.addAttribute("errormessage","Nie ma zamowienia z: "+dataZamowienia); 
-            return "errorzam";                
-        }
-        else
-        {        
-            long id = zamowienieList.get(0).getId();
-            zamowienieRepository.deleteById(id);
-
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto zamowienie z: "+dataZamowienia); 
-            return "viewmessagezam";                
-        }
-        } catch (Exception e)
-        { return "errorzam";
-                }
+    model.addAttribute("message","Usuniêto zamowienie o dacie zamowienia: "+dataZamowienia+" i otrzymania: "+dataOtrzymania); 
+    return "redirect:/print_all_zam"; 
     }
  
 //--------- USUWANIE PRACOWNIKA ---------\\
         
-        @RequestMapping("/delete_pracownik")
-    public String deletePracownik(Model model)
-    {       
-        TransPracownik transPracownik = new TransPracownik();                
-        model.addAttribute("transPracownik", transPracownik);         
-        return "deleteformpracownik";  
-    }
-    
-    @RequestMapping(value = "/delete_pracownik", method = RequestMethod.POST)
-    public String deletePracownik(Model model,TransPracownik transPracownik)
-    {
+    @RequestMapping("/delete_pracownik/{id_pracownika}")
+    public String deletePracownik(@PathVariable("id_pracownika")long id, Model model,Pracownik pracownik, TransPracownik transPracownik) {
+     
+        pracownikRepository.deleteById(pracownik.getId_pracownika());  
         String imie = transPracownik.getImie();
         String nazwisko = transPracownik.getNazwisko();
         
-        List<Pracownik> pracownikList = pracownikRepository.findByImieAndNazwisko(imie,nazwisko);
-        
-        try{
-        
-        if (pracownikList.size()==0)
-        {         
-            model.addAttribute("errormessage","Nie ma pracownika: "+imie+" "+nazwisko); 
-            return "errorpracownik";                
-        }
-        else
-        {        
-            long id = pracownikList.get(0).getId();
-            pracownikRepository.deleteById(id);
-
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto pracownika: "+imie+" "+nazwisko); 
-            return "viewmessagepracownik";                
-        }
-        } catch (Exception e)
-        { return "errorpracownik";
-                }
-    }    
+    model.addAttribute("message","Usunieto pracownika: "+imie+" "+nazwisko);
+    return "redirect:/print_pracownik"; 
+    }
     
 //--------- USUWANIE KLIENTA ---------\\
         
-        @RequestMapping("/delete_klient")
-    public String deleteKlient(Model model)
-    {       
-        TransKlient transKlient = new TransKlient();                
-        model.addAttribute("transKlient", transKlient);         
-        return "deleteformklient";  
-    }
-    
-    @RequestMapping(value = "/delete_klient", method = RequestMethod.POST)
-    public String deleteKlient(Model model,TransKlient transKlient)
-    {
+ @RequestMapping("/delete_klient/{id_klienta}")
+    public String deleteKlient(@PathVariable("id_klienta")long id, Model model,Klient klient, TransKlient transKlient) {
+     
+        klientRepository.deleteById(klient.getId_klienta());  
         String imie = transKlient.getImie();
         String nazwisko = transKlient.getNazwisko();
         
-        List<Klient> klientList = klientRepository.findByImieAndNazwisko(imie,nazwisko);
-        
-        try{
-        
-        if (klientList.size()==0)
-        {         
-            model.addAttribute("errormessage","Nie ma osoby: "+imie+" "+nazwisko); 
-            return "errorklient";                
-        }
-        else
-        {        
-            long id = klientList.get(0).getId();
-            klientRepository.deleteById(id);
-
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto osobe: "+imie+" "+nazwisko); 
-            return "viewmessageklient";                
-        }
-        } catch (Exception e)
-        { return "errorklient";
-                }
-    }
+    model.addAttribute("message","Usunieto klienta: "+imie+" "+nazwisko);
+    return "redirect:/print_klient"; 
+    }    
+    
     
 //--------- USUWANIE ADRESU ---------\\
-        
-        @RequestMapping("/delete_adres")
-    public String deleteAdres(Model model)
-    {       
-        TransAdres transAdres = new TransAdres();                
-        model.addAttribute("transAdres", transAdres);         
-        return "deleteformadres";  
-    }
-    
-    @RequestMapping(value = "/delete_adres", method = RequestMethod.POST)
-    public String deleteAdres(Model model,TransAdres transAdres)
-    {
-        String miejscowosc = transAdres.getMiejscowosc();
-        String ulica = transAdres.getUlica();
-        
-        List<Adres> adresList = adresRepository.findByMiejscowoscAndUlica(miejscowosc,ulica);
-        
-        try{
-        
-        if (adresList.size()==0)
-        {         
-            model.addAttribute("errormessage","Nie ma adresu: "+miejscowosc+" "+ulica); 
-            return "erroradres";                
-        }
-        else
-        {        
-            long id = adresList.get(0).getId();
-            adresRepository.deleteById(id);
 
-            model.addAttribute("header", "Wynik"); 
-            model.addAttribute("message","Usunieto adres: "+miejscowosc+" "+ulica); 
-            return "viewmessageadres";                
-        }
-        } catch (Exception e)
-        { return "erroradres";
-                }
-    }
+     @RequestMapping("/delete_adres/{id_adresu}")
+    public String deleteAdres(@PathVariable("id_adresu")long id, Model model,Adres adres, TransAdres transAdres) {
+     
+        adresRepository.deleteById(adres.getId_adresu());  
+        String miejscowosc = transAdres.getMiejscowosc();
+        
+    model.addAttribute("message","Usunieto adres: "+miejscowosc);
+    return "redirect:/print_adres"; 
+    }   
     
 //------------------------------------------    EDYTOWANIE    ------------------------------------------\\
 
-//--------- EDYTOWANIE AUTORA ---------\\
-        
-        @RequestMapping("/edit_autor/{id}")
-    public String editAutor(Model model, TransAutor transAutor, @PathVariable(name = "id") Long id) {
-            Autor autor = autorRepository.findByid(id).get(0);
-
-            long id_autora = autor.getId();
-            String imie = autor.getImie();
-            String nazwisko = autor.getNazwisko();
-            
-            System.out.println("id_autora" + id + "imie" + imie + "nazwisko" + nazwisko);
-            
-            model.addAttribute("id", id_autora);
-            model.addAttribute("imie", imie);
-            model.addAttribute("nazwisko", nazwisko);
-            
-            model.addAttribute("transAutor", transAutor);
-            return "editformautor";
-    }   
-    
-    @RequestMapping(value = "/edit_autor", method = RequestMethod.POST)
-    public String editAutor(Model model,TransAutor transAutor)
-    {
-            Long id_autora = Long.parseLong(transAutor.getId());
-            String imie = transAutor.getImie();
-            String nazwisko = transAutor.getNazwisko();
-        
-        autorRepository.save(new Autor(id_autora, imie, nazwisko));
-        
-        model.addAttribute("header", "Zaktualizowano dane w bazie");
-        model.addAttribute("message", "" +imie + " " +nazwisko);
-        return "viewmessageautor";
-        
-    }    
-    
-//--------- EDYTOWANIE GATUNKU ---------\\
-        
-        @RequestMapping("/edit_wydawnictwo/{id}")
-    public String editGatunek(Model model, TransGatunek transGatunek, @PathVariable(name = "id") Long id) {
-            Gatunek gatunek = gatunekRepository.findByid(id).get(0);
-
-            long id_gatunku = gatunek.getId();
-            String nazwa = gatunek.getNazwa();
-            
-            System.out.println("id gatunku" + id + "nazwa" + nazwa);
-            
-            model.addAttribute("id", id_gatunku);
-            model.addAttribute("nazwa", nazwa);
-            
-            model.addAttribute("transGatunek", transGatunek);
-            return "editformgatunek";
-    }   
-    
-    @RequestMapping(value = "/edit_gatunek", method = RequestMethod.POST)
-    public String editGatunek(Model model,TransGatunek transGatunek)
-    {
-            Long id_gatunku = Long.parseLong(transGatunek.getId());
-            String nazwa = transGatunek.getNazwa();
-        
-        gatunekRepository.save(new Gatunek(id_gatunku, nazwa));
-        
-        model.addAttribute("header", "Zaktualizowano dane w bazie");
-        model.addAttribute("message", "" +nazwa);
-        return "viewmessagegatunek";
-        
-    } 
-
 //--------- EDYTOWANIE KSIAZKI ---------\\
         
-        @RequestMapping("/edit_ksiazka/{id}")
-    public String editKsiazka(Model model, TransKsiazka transKsiazka, @PathVariable(name = "id") Long id) {
-            Ksiazka ksiazka = ksiazkaRepository.findByid(id).get(0);
+        @RequestMapping("/edit_ksiazka/{id_ksiazki}")
+    public String editKsiazka(Model model, TransKsiazka transKsiazka, @PathVariable(name = "id_ksiazki") Long id) {
+            
 
-            long id_ksiazki = ksiazka.getId();
-            String nazwa = ksiazka.getNazwa();
-            String gatunek = ksiazka.getGatunek();
-            int cena = ksiazka.getCena();
-            
-            System.out.println("id_ksiazki" + id + "nazwa" + nazwa + "gatunek" + gatunek + "cena" +cena);
-            
-            model.addAttribute("id", id_ksiazki);
-            model.addAttribute("nazwa", nazwa);
-            model.addAttribute("gatunek", gatunek);
-            model.addAttribute("cena", cena);
-            
+            model.addAttribute("ksiazka", ksiazkaRepository.getOne(id));
+
             model.addAttribute("transKsiazka", transKsiazka);
+
             return "editformksiazka";
     }   
     
     @RequestMapping(value = "/edit_ksiazka", method = RequestMethod.POST)
     public String editKsiazka(Model model,TransKsiazka transKsiazka)
     {
-            Long id_ksiazki = Long.parseLong(transKsiazka.getId());
+            Long id_ksiazki = transKsiazka.getId_ksiazki();
             String nazwa = transKsiazka.getNazwa();
+            String autor = transKsiazka.getAutor();
             String gatunek = transKsiazka.getGatunek();
-            String scena = transKsiazka.getScena();
-            int cena = Integer.parseInt(scena);
+            int cena = transKsiazka.getCena();
 
         
-       ksiazkaRepository.save(new Ksiazka(id_ksiazki, nazwa, gatunek, cena));
+       ksiazkaRepository.save(new Ksiazka(id_ksiazki, nazwa, autor, gatunek, cena));
         
         model.addAttribute("header", "Zaktualizowano dane w bazie");
         model.addAttribute("message", "" +nazwa + " " +gatunek+ " " +cena);
@@ -787,80 +438,73 @@ public class MyController {
     
 //--------- EDYTOWANIE ZAMOWIENIA ---------\\
         
-        @RequestMapping("/edit_zam/{id}")
-    public String editZamowienie(Model model, TransZamowienie transZamowienie, @PathVariable(name = "id") Long id) {
-            Zamowienie zamowienie = zamowienieRepository.findByid(id).get(0);
+        @RequestMapping("/edit_zam/{id_zamowienia}")
+    public String editZamowienie(Model model, TransZamowienie transZamowienie, @PathVariable(name = "id_zamowienia") Long id) {
+        
+            model.addAttribute("zamowienie", zamowienieRepository.getOne(id));
 
-            long id_zamowienia = zamowienie.getId();
-            String dataZamowienia = zamowienie.getDataZamowienia();
-            String dataOtrzymania = zamowienie.getDataOtrzymania();
-            int koszt = zamowienie.getKoszt();
+            model.addAttribute("transZamowienie", transZamowienie);  
+            ArrayList<Klient> klient = (ArrayList<Klient>)klientRepository.findAll();
+            model.addAttribute("klientList",klient);
+            ArrayList<Ksiazka> ksiazka = (ArrayList<Ksiazka>)ksiazkaRepository.findAll();
+            model.addAttribute("ksiazkaList",ksiazka);
             
-            System.out.println("id_ksiazki" + id + "data zamowienia" + dataZamowienia + "data otrzymania" + dataOtrzymania + "koszt" +koszt);
-            
-            model.addAttribute("id", id_zamowienia);
-            model.addAttribute("nazwa", dataZamowienia);
-            model.addAttribute("gatunek", dataOtrzymania);
-            model.addAttribute("cena", koszt);
-            
-            model.addAttribute("transZamowienie", transZamowienie);
             return "editformzamowienie";
     }   
     
     @RequestMapping(value = "/edit_zam", method = RequestMethod.POST)
-    public String editZamowienie(Model model,TransZamowienie transZamowienie)
+    public String editZamowienie(Model model,TransZamowienie transZamowienie, Klient klient, Ksiazka ksiazka)
     {
         
-            Long id_zamowienia = Long.parseLong(transZamowienie.getId());
+            Long id = transZamowienie.getId_zamowienia();
             String dataZamowienia = transZamowienie.getDataZamowienia();
             String dataOtrzymania = transZamowienie.getDataOtrzymania();
-            String skoszt = transZamowienie.getSkoszt();
-            int koszt = Integer.parseInt(skoszt);
+            int koszt = transZamowienie.getKoszt();
+            String metodaPlatnosci = transZamowienie.getMetodaPlatnosci();
+            Long id_klienta = klient.getId_klienta();
+            Long id_ksiazki = ksiazka.getId_ksiazki();
         
-       ksiazkaRepository.save(new Ksiazka(id_zamowienia, dataZamowienia, dataOtrzymania, koszt));
+            Klient klient1 = klientRepository.findById(id_klienta).get();
+            Ksiazka ksiazka1 = ksiazkaRepository.findById(id_ksiazki).get();
+        
+       zamowienieRepository.save(new Zamowienie(id, dataZamowienia, dataOtrzymania, koszt, metodaPlatnosci, klient1, ksiazka1));
         
         model.addAttribute("header", "Zaktualizowano dane w bazie");
         model.addAttribute("message", "" +dataZamowienia + " " +dataOtrzymania+ " " +koszt);
-        return "viewmessagezamowienie";
+        return "viewmessagezam";
         
     }  
     
 //--------- EDYTOWANIE PRACOWNIKA ---------\\
         
-        @RequestMapping("/edit_pracownik/{id}")
-    public String editPracownik(Model model, TransPracownik transPracownik, @PathVariable(name = "id") Long id) {
-            Pracownik pracownik = pracownikRepository.findByid(id).get(0);
+        @RequestMapping("/edit_pracownik/{id_pracownika}")
+    public String editPracownik(Model model, TransPracownik transPracownik, Adres adres, @PathVariable(name = "id_pracownika") Long id) {
+            
+            
 
-            long id_pracownika = pracownik.getId();
-            String imie = pracownik.getImie();
-            String nazwisko = pracownik.getNazwisko();
-            int telefon = pracownik.getTelefon();
-            String stanowisko = pracownik.getStanowisko();
+            model.addAttribute("pracownik", pracownikRepository.getOne(id));
+
+            model.addAttribute("transPracownik", transPracownik);       
+            ArrayList<Adres> adres1 = (ArrayList<Adres>)adresRepository.findAll();
+            model.addAttribute("adresList",adres1);
             
-            System.out.println("id_pracownika" + id + "imie" + imie + "nazwisko" + nazwisko + "telefon" +telefon+ "stanowisko" +stanowisko);
-            
-            model.addAttribute("id", id_pracownika);
-            model.addAttribute("imie", imie);
-            model.addAttribute("nazwsiko", nazwisko);
-            model.addAttribute("telefon", telefon);
-            model.addAttribute("stanowisko", stanowisko);
-            
-            model.addAttribute("transPracownik", transPracownik);
             return "editformpracownik";
     }   
     
     @RequestMapping(value = "/edit_pracownik", method = RequestMethod.POST)
-    public String editPracownik(Model model,TransPracownik transPracownik)
+    public String editPracownik(Model model,TransPracownik transPracownik, Adres adres)
     {
-            Long id_pracownika = Long.parseLong(transPracownik.getId());
+            Long id_pracownika = transPracownik.getId_pracownika();
             String imie = transPracownik.getImie();
             String nazwisko = transPracownik.getNazwisko();
-            String stelefon = transPracownik.getStelefon();
-            int telefon = Integer.parseInt(stelefon);
+            int telefon = transPracownik.getTelefon();
             String stanowisko = transPracownik.getStanowisko();
+            Long id_adresu = adres.getId_adresu();
+            
+            Adres adres1 = adresRepository.findById(id_adresu).get();
 
         
-       pracownikRepository.save(new Pracownik(id_pracownika, imie, nazwisko, telefon, stanowisko));
+       pracownikRepository.save(new Pracownik(id_pracownika, imie, nazwisko, telefon, stanowisko, adres1));
         
         model.addAttribute("header", "Zaktualizowano dane w bazie");
         model.addAttribute("message", "" +imie + " " +nazwisko+ " " +telefon+ " " +stanowisko);
@@ -870,35 +514,31 @@ public class MyController {
     
 //--------- EDYTOWANIE KLIENTA ---------\\
         
-        @RequestMapping("/edit_klient/{id}")
-    public String editKlient(Model model, TransKlient transKlient, @PathVariable(name = "id") Long id) {
-            Klient klient = klientRepository.findByid(id).get(0);
+        @RequestMapping("/edit_klient/{id_klienta}")
+    public String editKlient(Model model, TransKlient transKlient, Adres adres, @PathVariable(name = "id_klienta") long id) {
+            
+        
+            model.addAttribute("klient", klientRepository.getOne(id));
 
-            long id_klienta = klient.getId();
-            String imie = klient.getImie();
-            String nazwisko = klient.getNazwisko();
-            String email = klient.getEmail();
+            model.addAttribute("transKlient", transKlient);       
+            ArrayList<Adres> adres1 = (ArrayList<Adres>)adresRepository.findAll();
+            model.addAttribute("adresList",adres1);
             
-            System.out.println("id_klienta" + id + "imie" + imie + "nazwisko" + nazwisko + "email" +email);
-            
-            model.addAttribute("id", id_klienta);
-            model.addAttribute("imie", imie);
-            model.addAttribute("nazwisko", nazwisko);
-            model.addAttribute("email", email);
-            
-            model.addAttribute("transKlient", transKlient);
             return "editformklient";
     }   
     
     @RequestMapping(value = "/edit_klient", method = RequestMethod.POST)
-    public String editKlient(Model model,TransKlient transKlient)
+    public String editKlient(Model model,TransKlient transKlient, Adres adres)
     {
-            Long id_klienta = Long.parseLong(transKlient.getId());
+            Long id_klienta = transKlient.getId_klienta();
             String imie = transKlient.getImie();
             String nazwisko = transKlient.getNazwisko();
             String email = transKlient.getEmail();
+            Long id_adresu = adres.getId_adresu();
+            
+            Adres adres1 = adresRepository.findById(id_adresu).get();
         
-        klientRepository.save(new Klient(id_klienta, imie, nazwisko, email));
+        klientRepository.save(new Klient(id_klienta, imie, nazwisko, email, adres1));
         
         model.addAttribute("header", "Zaktualizowano dane w bazie");
         model.addAttribute("message", "" +imie + " " +nazwisko+ " "+email);
@@ -908,36 +548,24 @@ public class MyController {
     
 //--------- EDYTOWANIE ADRESU ---------\\
         
-        @RequestMapping("/edit_adres/{id}")
-    public String editAdres(Model model, TransAdres transAdres, @PathVariable(name = "id") Long id) {
-            Adres adres = adresRepository.findByid(id).get(0);
+        @RequestMapping("/edit_adres/{id_adresu}")
+    public String editAdres(Model model, TransAdres transAdres, @PathVariable(name = "id_adresu") Long id) {
+            
 
-            long id_adresu = adres.getId();
-            String miejscowosc = adres.getMiejscowosc();
-            String ulica = adres.getUlica();
-            int nrDomu = adres.getNrDomu();
-            String kodPocztowy = adres.getKodPocztowy();
-            
-            System.out.println("id_adresu" + id + "miejscowosc" + miejscowosc + "ulica" + ulica + "nrDomu" + nrDomu + "kodPocztowy" +kodPocztowy);
-            
-            model.addAttribute("id", id_adresu);
-            model.addAttribute("miejscowosc", miejscowosc);
-            model.addAttribute("ulica", ulica);
-            model.addAttribute("nrDomu", nrDomu);
-            model.addAttribute("kodPocztowy", kodPocztowy);
-            
-            model.addAttribute("transAdres", transAdres);
+            model.addAttribute("adres", adresRepository.getOne(id));
+
+            model.addAttribute("transAdres", transAdres); 
             return "editformadres";
     }   
     
     @RequestMapping(value = "/edit_adres", method = RequestMethod.POST)
     public String editAdres(Model model,TransAdres transAdres)
     {
-            Long id_adresu = Long.parseLong(transAdres.getId());
+            Long id_adresu = transAdres.getId_adresu();
             String miejscowosc = transAdres.getMiejscowosc();
             String ulica = transAdres.getUlica();
-            String snrDomu = transAdres.getSnrDomu();
-            int nrDomu = Integer.parseInt(snrDomu);
+            String nrDomu = transAdres.getnrDomu();
+
             String kodPocztowy = transAdres.getKodPocztowy();
         
         adresRepository.save(new Adres(id_adresu, miejscowosc, ulica, nrDomu, kodPocztowy));
@@ -946,8 +574,9 @@ public class MyController {
         model.addAttribute("message", "" +miejscowosc + " " +ulica+ " " +nrDomu+ " "+kodPocztowy);
         return "viewmessageadres";
         
-    }    
-
+    } 
+    
+    
     
     //--------- OBSLUGA BLEDOW ---------\\
 

@@ -1,0 +1,81 @@
+    <!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" type="text/css" href="/style.css" />
+    <title>Edytowanie ksiazki</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    </head>
+    
+    <body>
+           
+    <div id="menu">
+        <ul>
+            <li><a href="/index.html">Strona glowna</a></li>
+            <li><a href="/print_klient">Klienci</a></li>
+            <li><a href="/print_pracownik">Pracownicy</a></li>
+            <li><a href="/print_ksiazka">Ksiazki</a></li>
+            <li><a href="/print_all_zam">Zamowienia</a></li>
+            <li><a href="/print_adres">Adresy</a></li>
+        </ul>
+    </div>
+    <br/>
+    
+    <div id="info">
+    <h3>Edytowanie ksiazki:</h3>
+    </div>
+    
+    <div id="formularz">
+    <form th:action="@{/edit_ksiazka}" method="POST" th:object="${transKsiazka}">
+
+        <div class="form-control"> 
+            <label> ID: </label>
+            <input type="text" th:field="${ksiazka.id_ksiazki}"/><br/>            
+        </div>       
+
+        <br/>
+        
+         <div class="form-control"> 
+            <label> Nazwa: </label>:
+            <input type="text" th:field="${ksiazka.nazwa}" /><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-control"> 
+            <label> Autor: </label>:
+            <input type="text" th:field="${ksiazka.autor}" /><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-control"> 
+            <label> Gatunek: </label>:
+            <input type="text" th:field="${ksiazka.gatunek}" /><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-control"> 
+            <label> Cena: </label>:
+            <input type="text" th:field="${ksiazka.cena}" /><br/>            
+        </div>       
+   
+
+        <br/>
+        
+
+        <input type="submit" class="edytuj" value="Edytuj" />
+
+    </form>
+        <br/>
+    </div>
+            
+    <div id="footer">
+    <p>&copy Wszelkie prawa zastrzezone. <br /></p>
+    </div>
+
+
+
+    </body>
+</html>

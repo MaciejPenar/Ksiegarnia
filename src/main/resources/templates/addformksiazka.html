@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Dodawanie ksiazki do bazy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    
+    <body>
+        
+    <div id="menu">
+        <ul>
+            <li><a href="/index.html">Strona glowna</a></li>
+            <li><a href="/print_klient">Klienci</a></li>
+            <li><a href="/print_pracownik">Pracownicy</a></li>
+            <li><a href="/print_ksiazka">Ksiazki</a></li>
+            <li><a href="/print_all_zam">Zamowienia</a></li>
+            <li><a href="/print_adres">Adresy</a></li>
+        </ul>
+    </div>
+    <br/>
+    
+    <div id="info">
+    <h3> Dodawanie ksiazki do bazy:</h3>
+    </div>
+    
+    <div id="formularz">
+    <form th:action="@{/add_ksiazka}" method="POST" th:object="${transKsiazka}">
+
+        <div class="form-group">    
+            <label> Nazwa: </label>
+            <input type="text" th:field="${transKsiazka.nazwa}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+            <label> Autor: </label>
+            <input type="text" th:field="${transKsiazka.autor}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+            <label> Gatunek: </label>
+            <input type="text" th:field="${transKsiazka.gatunek}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+            <label> Cena: </label>
+            <input type="text" th:field="${transKsiazka.cena}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+            <label> Data zamowienia: </label>
+            <input type="text" th:field="${transKsiazka.dataZamowienia}" value=""/><br/>            
+        </div>       
+
+        <br/>
+        
+        <div class="form-group">    
+            <label> Data otrzymania: </label>
+            <input type="text" th:field="${transKsiazka.dataOtrzymania}" value=""/><br/>            
+        </div>       
+
+        <br/>
+
+        <input type="submit" value="Dodaj" />
+
+    </form>
+        <br/>
+    </div>
+    
+    <div id="footer">
+    <p>&copy Wszelkie prawa zastrzezone. <br /></p>
+    </div>
+
+
+
+    </body>
+</html>

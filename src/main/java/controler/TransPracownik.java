@@ -2,27 +2,20 @@ package controler;
 
 public class TransPracownik
 {
-    private String id;
     private String imie;
     private String nazwisko;
-    private String stelefon;
+    private int telefon;
     private String stanowisko;
+    private Long id_pracownika;
 
     public TransPracownik()
     {
         this.imie = "";
         this.nazwisko = "";
-        this.stelefon = "";
+        this.telefon = 0;
         this.stanowisko = "";
+        this.id_pracownika = null;
         
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getImie() {
@@ -41,12 +34,12 @@ public class TransPracownik
         this.nazwisko = nazwisko;
     }
 
-    public String getStelefon() {
-        return stelefon;
+    public int getTelefon() {
+        return telefon;
     }
 
-    public void setStelefon(String stelefon) {
-        this.stelefon = stelefon;
+    public void setTelefon(int telefon) {
+        this.telefon = telefon;
     }
 
     public String getStanowisko() {
@@ -57,11 +50,13 @@ public class TransPracownik
         this.stanowisko = stanowisko;
     }
 
-    
+    public Long getId_pracownika() {
+        return id_pracownika;
+    }
 
-    
-
-
+    public void setId_pracownika(Long id_pracownika) {
+        this.id_pracownika = id_pracownika;
+    }
 
 
 

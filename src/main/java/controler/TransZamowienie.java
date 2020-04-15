@@ -2,22 +2,33 @@ package controler;
 
 public class TransZamowienie {
 
-    private String id;
+
+    private Long id_zamowienia;
     private String dataZamowienia;  
     private String dataOtrzymania;
-    private String skoszt;
+    private int koszt;
     private String metodaPlatnosci;
     private String imie;
     private String nazwisko;
     private String nazwa;
-   
-
-    public String getId() {
-        return id;
+    
+    
+     public TransZamowienie()
+    {
+        this.dataZamowienia = "";
+        this.dataOtrzymania = "";
+        this.koszt = 0;
+        this.metodaPlatnosci = "";
+        this.id_zamowienia = null;
+        
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Long getId_zamowienia() {
+        return id_zamowienia;
+    }
+
+    public void setId_zamowienia(Long id_zamowienia) {
+        this.id_zamowienia = id_zamowienia;
     }
 
     public String getDataZamowienia() {
@@ -52,20 +63,12 @@ public class TransZamowienie {
         this.nazwisko = nazwisko;
     }
 
-    public String getSkoszt() {
-        return skoszt;
+    public int getKoszt() {
+        return koszt;
     }
 
-    public void setSkoszt(String skoszt) {
-        this.skoszt = skoszt;
-    }
-
-    public String getNazwa() {
-        return nazwa;
-    }
-
-    public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
+    public void setKoszt(int koszt) {
+        this.koszt = koszt;
     }
 
     public String getMetodaPlatnosci() {
@@ -76,6 +79,14 @@ public class TransZamowienie {
         this.metodaPlatnosci = metodaPlatnosci;
     }
 
+    public String getNazwa() {
+        return nazwa;
+    }
+
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
+    }
+    
     
     
 }
