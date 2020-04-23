@@ -25,6 +25,8 @@ public class MyController {
     AdresRepository adresRepository;
     @Autowired
     KoszykRepository koszykRepository;
+    @Autowired
+    MetodaRepository metodaRepository;
  
     
     @RequestMapping("/admin")
@@ -71,12 +73,12 @@ public class MyController {
     public String printAllZamowienie(Model model)
     {
         List<Zamowienie> zamowienieList =  zamowienieRepository.findAll(); 
-               
+        List<Koszyk> koszykList =  koszykRepository.findAll();       
         try{
   
         model.addAttribute("header","Lista wszystkich zamowienien"); //Dodanie obiektu do pamieci lokalnej modelu
         model.addAttribute("zamowienieList",zamowienieList); //Dodanie obiektu do pamieci lokalnej modelu
-        
+        model.addAttribute("koszykList",koszykList);
         } catch (Exception e)
         { return "errorzam";
                 }
@@ -158,14 +160,12 @@ public class MyController {
         model.addAttribute("koszykList",koszykList); //Dodanie obiektu do pamieci lokalnej modelu
         
         } catch (Exception e)
-        { return "errorkoszyk";
+        { return "errorpage";
                 }
         
         return "printformkoszyk"; //Przekierowanie na strone 
 
     } 
-
-
 
     
 //------------------------------------------    DODAWANIE    ------------------------------------------\\
@@ -205,30 +205,32 @@ public class MyController {
         model.addAttribute("transZamowienie", transZamowienie);  
         ArrayList<Klient> klient = (ArrayList<Klient>)klientRepository.findAll();
         model.addAttribute("klientList",klient);
-        ArrayList<Ksiazka> ksiazka = (ArrayList<Ksiazka>)ksiazkaRepository.findAll();
-        model.addAttribute("ksiazkaList",ksiazka);
+        ArrayList<Koszyk> koszyk = (ArrayList<Koszyk>)koszykRepository.findAll();
+        model.addAttribute("koszykList",koszyk);
+        ArrayList<Metoda> metoda = (ArrayList<Metoda>)metodaRepository.findAll();
+        model.addAttribute("metodaList",metoda);
         return "addformzamowienie";  
     }
     
         @RequestMapping(value = "/add_zam", method = RequestMethod.POST)
-    public String addZamowienie(Model model,TransZamowienie transZamowienie, Klient klient, Ksiazka ksiazka)
+    public String addZamowienie(Model model,TransZamowienie transZamowienie, Metoda metoda, Klient klient, Koszyk koszyk)
     {
+        
         String dataZamowienia = transZamowienie.getDataZamowienia();
         String dataOtrzymania = transZamowienie.getDataOtrzymania();
         int koszt = transZamowienie.getKoszt();
-        String metodaPlatnosci = transZamowienie.getMetodaPlatnosci();
+        Long id_metody = metoda.getId_metody();
         Long id_klienta = klient.getId_klienta();
-        Long id_ksiazki = ksiazka.getId_ksiazki();
-        
+        Long id_koszyka = koszyk.getId_koszyka();
+        Metoda metoda1 = metodaRepository.findById(id_metody).get();
         Klient klient1 = klientRepository.findById(id_klienta).get();
-        Ksiazka ksiazka1 = ksiazkaRepository.findById(id_ksiazki).get();
         
         try
         {
-        zamowienieRepository.save(new Zamowienie(dataZamowienia,dataOtrzymania,koszt,metodaPlatnosci, klient1, ksiazka1));
+        zamowienieRepository.save(new Zamowienie(dataZamowienia,dataOtrzymania,koszt, metoda1, klient1, koszyk));
         
         model.addAttribute("header", "Wynik"); 
-        model.addAttribute("message","Wstawiono! Data zamówienia: "+dataZamowienia+" data otrzymania: "+dataOtrzymania); 
+        model.addAttribute("message","Wstawiono! Data zamï¿½wienia: "+dataZamowienia+" data otrzymania: "+dataOtrzymania+"Koszyk: "+koszyk); 
         } catch (Exception e)
         { return "errorzam";
                 }
@@ -333,8 +335,41 @@ public class MyController {
         return "viewmessageadres";                
     }
 
+   
+    //--------- DODAWANIE DO KOSZYKA ---------\\
     
+        @RequestMapping("/add_koszyk")
+    public String addKoszyk(Model model)
+    {       
+       TransKoszyk transKoszyk = new TransKoszyk();                
+        model.addAttribute("transKoszyk", transKoszyk);
+        ArrayList<Ksiazka> ksiazka = (ArrayList<Ksiazka>)ksiazkaRepository.findAll();
+        model.addAttribute("ksiazkaList",ksiazka);
+        return "addformkoszyk";  
+    }
     
+        @RequestMapping(value = "/add_koszyk", method = RequestMethod.POST)
+    public String addKoszyk(Model model,TransKoszyk transKoszyk, Ksiazka ksiazka)
+    {
+        int ilosc = transKoszyk.getIlosc();
+        Long id_ksiazki = ksiazka.getId_ksiazki();
+        
+        //ArrayList<Ksiazka> ksiazka1 = (ArrayList<Ksiazka>)ksiazkaRepository.findAll();
+        //model.addAttribute("ksiazkaList",ksiazka1);
+        
+        
+        Ksiazka ksiazka1 = ksiazkaRepository.findById(id_ksiazki).get();
+               
+        koszykRepository.save(new Koszyk(ilosc, ksiazka1));
+        
+        model.addAttribute("header", "Wynik"); 
+        model.addAttribute("message","Wstawiono do bazy ksiazke: "+ksiazka1+" ilosc: "+ilosc); 
+
+        return "viewmessagekoszyk";                
+    }    
+    
+  
+   
     
 //------------------------------------------    USUWANIE    ------------------------------------------\\
     
@@ -347,7 +382,7 @@ public class MyController {
         ksiazkaRepository.deleteById(ksiazka.getId_ksiazki());  
         String nazwa = transKsiazka.getNazwa();
         
-    model.addAttribute("message","Usuniêto ksi¹¿kê o nazwie: "+nazwa); 
+    model.addAttribute("message","Usuniï¿½to ksiï¿½ï¿½kï¿½ o nazwie: "+nazwa); 
     return "redirect:/print_ksiazka"; 
     }
     
@@ -360,7 +395,7 @@ public class MyController {
         String dataZamowienia = transZamowienie.getDataZamowienia();
         String dataOtrzymania = transZamowienie.getDataOtrzymania();
         
-    model.addAttribute("message","Usuniêto zamowienie o dacie zamowienia: "+dataZamowienia+" i otrzymania: "+dataOtrzymania); 
+    model.addAttribute("message","Usuniï¿½to zamowienie o dacie zamowienia: "+dataZamowienia+" i otrzymania: "+dataOtrzymania); 
     return "redirect:/print_all_zam"; 
     }
  
@@ -390,6 +425,16 @@ public class MyController {
     return "redirect:/print_klient"; 
     }    
     
+   //--------- USUWANIE Z KOSZYKA ---------\\
+
+    @RequestMapping("/delete_koszyk/{id_koszyka}")
+    public String deleteKoszyk(@PathVariable("id_koszyka")long id, Model model,Koszyk koszyk, TransKoszyk transKoszyk) {
+     
+        koszykRepository.deleteById(koszyk.getId_koszyka());  
+   
+    model.addAttribute("message","Usuniï¿½to ksiazke z koszyka: "); 
+    return "redirect:/print_koszyk"; 
+    }
     
 //--------- USUWANIE ADRESU ---------\\
 
@@ -436,6 +481,7 @@ public class MyController {
         
     }
     
+    
 //--------- EDYTOWANIE ZAMOWIENIA ---------\\
         
         @RequestMapping("/edit_zam/{id_zamowienia}")
@@ -446,14 +492,16 @@ public class MyController {
             model.addAttribute("transZamowienie", transZamowienie);  
             ArrayList<Klient> klient = (ArrayList<Klient>)klientRepository.findAll();
             model.addAttribute("klientList",klient);
-            ArrayList<Ksiazka> ksiazka = (ArrayList<Ksiazka>)ksiazkaRepository.findAll();
-            model.addAttribute("ksiazkaList",ksiazka);
+            ArrayList<Koszyk> koszyk = (ArrayList<Koszyk>)koszykRepository.findAll();
+            model.addAttribute("koszykList",koszyk);
+            ArrayList<Metoda> metoda = (ArrayList<Metoda>)metodaRepository.findAll();
+            model.addAttribute("metodaList",metoda);
             
             return "editformzamowienie";
     }   
     
     @RequestMapping(value = "/edit_zam", method = RequestMethod.POST)
-    public String editZamowienie(Model model,TransZamowienie transZamowienie, Klient klient, Ksiazka ksiazka)
+    public String editZamowienie(Model model,TransZamowienie transZamowienie, Metoda metoda, Koszyk koszyk, Klient klient)
     {
         
             Long id = transZamowienie.getId_zamowienia();
@@ -462,12 +510,13 @@ public class MyController {
             int koszt = transZamowienie.getKoszt();
             String metodaPlatnosci = transZamowienie.getMetodaPlatnosci();
             Long id_klienta = klient.getId_klienta();
-            Long id_ksiazki = ksiazka.getId_ksiazki();
-        
+            Long id_koszyka = koszyk.getId_koszyka();
+            Long id_metody = metoda.getId_metody();
             Klient klient1 = klientRepository.findById(id_klienta).get();
-            Ksiazka ksiazka1 = ksiazkaRepository.findById(id_ksiazki).get();
+            Koszyk koszyk1 = koszykRepository.findById(id_koszyka).get();
+            Metoda metoda1 = metodaRepository.findById(id_metody).get();
         
-       zamowienieRepository.save(new Zamowienie(id, dataZamowienia, dataOtrzymania, koszt, metodaPlatnosci, klient1, ksiazka1));
+       zamowienieRepository.save(new Zamowienie(id, dataZamowienia, dataOtrzymania, koszt, metoda1, klient1, koszyk1));
         
         model.addAttribute("header", "Zaktualizowano dane w bazie");
         model.addAttribute("message", "" +dataZamowienia + " " +dataOtrzymania+ " " +koszt);
@@ -575,8 +624,6 @@ public class MyController {
         return "viewmessageadres";
         
     } 
-    
-    
     
     //--------- OBSLUGA BLEDOW ---------\\
 

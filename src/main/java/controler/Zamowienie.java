@@ -22,7 +22,6 @@ public class Zamowienie {
     private String dataZamowienia;
     private String dataOtrzymania;
     private int koszt;
-    private String metodaPlatnosci;
     
     @ManyToOne (cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_klienta")
@@ -33,37 +32,40 @@ public class Zamowienie {
     private Pracownik pracownik;
     
    @OneToMany(mappedBy = "zamowienie")
-    private Set<Ksiazka> ksiazka;
+    private Set<Koszyk> koszyk;
+   
+    @ManyToOne (cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_metody")
+    private Metoda metoda;
     
      protected Zamowienie() {}
 
-       public Zamowienie(Long id_zamowienia, String dataZamowienia, String dataOtrzymania, int koszt, String metodaPlatnosci,Klient klient, Ksiazka ksiazka) {
+       public Zamowienie(Long id_zamowienia, String dataZamowienia, String dataOtrzymania, int koszt, Metoda metoda, Klient klient, Koszyk koszyk) {
         this.id_zamowienia = id_zamowienia;
         this.dataZamowienia = dataZamowienia;
         this.dataOtrzymania = dataOtrzymania;
         this.koszt = koszt;
-        this.metodaPlatnosci = metodaPlatnosci;
+        this.metoda = metoda;
         this.klient = klient;
         this.pracownik = pracownik;
-        this.ksiazka = new HashSet<Ksiazka>();
+        this.koszyk = new HashSet<Koszyk>();
     }
      
-    public Zamowienie(String dataZamowienia, String dataOtrzymania, int koszt, String metodaPlatnosci,Klient klient, Ksiazka ksiazka) {
+    public Zamowienie(String dataZamowienia, String dataOtrzymania, int koszt, Metoda metoda, Klient klient, Koszyk koszyk) {
         this.dataZamowienia = dataZamowienia;
         this.dataOtrzymania = dataOtrzymania;
         this.koszt = koszt;
-        this.metodaPlatnosci = metodaPlatnosci;
+        this.metoda = metoda;
         this.klient = klient;
         this.pracownik = pracownik;
-        this.ksiazka = new HashSet<Ksiazka>();
+        this.koszyk = new HashSet<Koszyk>();
     }
 
-       public Zamowienie(Long id_zamowienia, String dataZamowienia, String dataOtrzymania, int koszt, String metodaPlatnosci) {
+       public Zamowienie(Long id_zamowienia, String dataZamowienia, String dataOtrzymania, int koszt) {
         this.id_zamowienia = id_zamowienia;
         this.dataZamowienia = dataZamowienia;
         this.dataOtrzymania = dataOtrzymania;
         this.koszt = koszt;
-        this.metodaPlatnosci = metodaPlatnosci;
     }
 
     public Long getId_zamowienia() {
@@ -94,12 +96,12 @@ public class Zamowienie {
         return koszt;
     }
 
-    public String getMetodaPlatnosci() {
-        return metodaPlatnosci;
+    public Metoda getMetoda() {
+        return metoda;
     }
 
-    public void setMetodaPlatnosci(String metodaPlatnosci) {
-        this.metodaPlatnosci = metodaPlatnosci;
+    public void setMetoda(Metoda metoda) {
+        this.metoda = metoda;
     }
     
     public void setKoszt(int koszt) {
@@ -122,19 +124,21 @@ public class Zamowienie {
         this.klient = klient;
     }
 
-    public Set<Ksiazka> getKsiazka() {
-        return ksiazka;
+    public Set<Koszyk> getKoszyk() {
+        return koszyk;
     }
 
-    public void setKsiazka(Set<Ksiazka> ksiazka) {
-        this.ksiazka = ksiazka;
+    public void setKoszyk(Set<Koszyk> koszyk) {
+        this.koszyk = koszyk;
     }
+
+   
     
     
     
     @Override
     public String toString() {
-        return String.format("[%s - %s - %s - %s - %s - %s]", id_zamowienia, dataZamowienia, dataOtrzymania, koszt, metodaPlatnosci);
+        return String.format("[%s - %s - %s - %s]", id_zamowienia, dataZamowienia, dataOtrzymania, koszt);
     }
     
 }

@@ -20,6 +20,7 @@
             <li><a href="/print_ksiazka">Ksiazki</a></li>
             <li><a href="/print_all_zam">Zamowienia</a></li>
             <li><a href="/print_adres">Adresy</a></li>
+            <li><a href="/print_koszyk">Koszyk</a></li>
         </ul>
     </div>
             <div class="container">
@@ -35,6 +36,7 @@
                             <th><h1>Metoda platnosci</h1></th> 
                             <th><h1>Edycja</h1></th>
                             <th><h1>Usuwanie</h1></th>
+                            <th><h1>Nazwa</h1></th>
                         </tr>
                         
                     </thead>
@@ -44,15 +46,18 @@
                             <td> <b  th:utext="${zamowienie.dataZamowienia}">...</b> </td>
                             <td> <b  th:utext="${zamowienie.dataOtrzymania}">...</b> </td>
                             <td> <b  th:utext="${zamowienie.koszt}">...</b> </td> 
-                            <td> <b  th:utext="${zamowienie.metodaPlatnosci}">...</b> </td> 
+                            <td> <b  th:utext="${zamowienie.metoda.nazwa}">...</b> </td> 
                             <td align="center"> <a th:href="@{'/edit_zam/' + ${zamowienie.id_zamowienia}}" class="buttonEdytuj">Edytuj</a> </td>
                             <td align="center"> <a th:href="@{'/delete_zam/' + ${zamowienie.id_zamowienia}}" class="buttonUsun">Usuń</a> </td>
-
-                                 
-                        </tr>
-
+                            </tr>
+                            <tr th:each ="koszyk : ${koszykList}">              
+                            <td> <b  th:utext="${koszyk.ksiazka.nazwa}">...</b> </td>
+                            </tr>
                     </tbody>          
                 </table>
+            </br>
+            </br>
+
                       <h3> <a href="/add_zam">Dodaj zamowienie </a></h3>
             </div>
             </div>

@@ -2,14 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <link rel="stylesheet" type="text/css" href="style.css" />
-    <title>Dodawanie osoby do bazy</title>
+    <title>Dodawanie ksiazki do bazy</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
     
-    
     <body>
-        
-    
         
     <div id="menu">
         <ul>
@@ -23,37 +20,30 @@
         </ul>
     </div>
     <br/>
-                
+    
     <div id="info">
-    <h3> Dodawanie adresu do bazy:</h3> 
+    <h3> Dodawanie ksiazki do koszyka:</h3>
     </div>
+    
     <div id="formularz">
-    <form th:action="@{/add_adres}" method="POST" th:object="${transAdres}">
+    <form th:action="@{/add_koszyk}" method="POST" th:object="${transKoszyk}">
 
-        <div class="form-group">    
-            <label> Miejscowosc: </label>
-            <input type="text" th:field="${transAdres.miejscowosc}" value=""/><br/>            
-        </div>       
-
-        <br/>
+         <div class="form-group">    
+                        <label>Ksiazka: </label>
+                        <br/>
+                        <select class="input" name="ksiazka" title="">
+                            <option>Książki</option>
+                            <option  th:each="ksiazka : ${ksiazkaList}"
+                                     th:value="${ksiazka.id_ksiazki}"
+                                     th:text="${ksiazka.nazwa}"></option>                    
+                        </select>   
+                    </div>   
+        
+         <br/>
         
         <div class="form-group">    
-            <label> Ulica: </label>
-            <input type="text" th:field="${transAdres.ulica}" value=""/><br/>            
-        </div>       
-
-        <br/>
-        
-        <div class="form-group">    
-            <label> Numer domu: </label>
-            <input type="text" th:field="${transAdres.nrDomu}" value=""/><br/>            
-        </div>       
-
-        <br/>
-        
-        <div class="form-group">    
-            <label> Kod pocztowy: </label>
-            <input type="text" th:field="${transAdres.kodPocztowy}" value=""/><br/>            
+            <label> Ilość: </label>
+            <input type="text" th:field="${transKoszyk.ilosc}" value=""/><br/>            
         </div>       
 
         <br/>

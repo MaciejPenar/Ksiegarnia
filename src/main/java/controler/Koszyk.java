@@ -13,21 +13,37 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+@Entity
 public class Koszyk {
     
-     @Id
+    @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id_koszyka;
+    private int ilosc;
+    
+    @ManyToOne (cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_zamowienia")
+    private Zamowienie zamowienie;
+    
+    @ManyToOne (cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_ksiazki")
+    private Ksiazka ksiazka;
      
-     
-    @OneToMany(mappedBy = "koszyk")
-    private Set<Ksiazka> ksiazka; 
+
     
          protected Koszyk() {}
          
-          public Koszyk(Long id_koszyka, Ksiazka ksiazka) {
+       public Koszyk(Long id_koszyka, int ilosc, Ksiazka ksiazka) {
         this.id_koszyka = id_koszyka;
-        this.ksiazka = new HashSet<Ksiazka>();
+        this.ilosc = ilosc;
+        this.ksiazka = ksiazka;
+        this.zamowienie = zamowienie;
+    }
+          
+            public Koszyk(int ilosc, Ksiazka ksiazka) {
+        this.ilosc = ilosc;
+        this.ksiazka = ksiazka;
+        this.zamowienie = zamowienie;
     }
 
     public Long getId_koszyka() {
@@ -38,14 +54,32 @@ public class Koszyk {
         this.id_koszyka = id_koszyka;
     }
 
-    public Set<Ksiazka> getKsiazka() {
+
+
+    public int getIlosc() {
+        return ilosc;
+    }
+
+    public void setIlosc(int ilosc) {
+        this.ilosc = ilosc;
+    }
+    
+
+    public Ksiazka getKsiazka() {
         return ksiazka;
     }
 
-    public void setKsiazka(Set<Ksiazka> ksiazka) {
+    public void setKsiazka(Ksiazka ksiazka) {
         this.ksiazka = ksiazka;
     }
+
+    public Zamowienie getZamowienie() {
+        return zamowienie;
+    }
+
+    public void setZamowienie(Zamowienie zamowienie) {
+        this.zamowienie = zamowienie;
+    }
     
-          
           
 }

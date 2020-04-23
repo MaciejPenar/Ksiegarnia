@@ -18,6 +18,6 @@ public interface ZamowienieRepository extends JpaRepository<Zamowienie, Long> {
     List<Zamowienie> findByDataZamowieniaAndDataOtrzymania(String dataZamowienia, String dataOtrzymania);
     List<Zamowienie> findByDataZamowienia(String dataOtrzymania);
 
-    List<Zamowienie> findByKsiazkaNazwa(String nazwa);
+
     List<Zamowienie> findByKlientNazwisko(String nazwisko);
 }

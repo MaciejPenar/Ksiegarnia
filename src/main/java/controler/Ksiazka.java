@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Ksiazka {
@@ -23,37 +24,32 @@ public class Ksiazka {
     private String gatunek;
     private int cena;
     
-    @ManyToOne (cascade = {CascadeType.ALL})
-    @JoinColumn(name = "id_zamowienia")
-    private Zamowienie zamowienie;
     
-     @ManyToOne (cascade = {CascadeType.ALL})
-    @JoinColumn(name = "id_koszyka")
-    private Koszyk koszyk;
+    
+    @OneToMany(mappedBy = "ksiazka")
+    private Set<Koszyk> koszyk; 
     
     protected Ksiazka() {}
     
     
-    Ksiazka(Long id_ksiazki, String nazwa, String autor, String gatunek, int cena) 
+    public Ksiazka(Long id_ksiazki, String nazwa, String autor, String gatunek, int cena) 
     {
         this.id_ksiazki = id_ksiazki;
         this.nazwa = nazwa;
         this.cena = cena;
         this.autor = autor;
         this.gatunek = gatunek;
-        this.zamowienie = zamowienie;
-        this.koszyk = koszyk;
+        this.koszyk = new HashSet<Koszyk>();
 
     }
     
-    Ksiazka(String nazwa, String autor, String gatunek, int cena) 
+    public Ksiazka(String nazwa, String autor, String gatunek, int cena) 
     {
         this.nazwa = nazwa;
         this.cena = cena;
         this.autor = autor;
         this.gatunek = gatunek;
-        this.zamowienie = zamowienie;
-        this.koszyk = koszyk;
+        this.koszyk = new HashSet<Koszyk>();
     }
 
     public Long getId_ksiazki() {
@@ -82,14 +78,6 @@ public class Ksiazka {
         this.cena = cena;
     }
 
-    public Zamowienie getZamowienie() {
-        return zamowienie;
-    }
-
-    public void setZamowienie(Zamowienie zamowienie) {
-        this.zamowienie = zamowienie;
-    }
-
     public String getAutor() {
         return autor;
     }
@@ -106,9 +94,20 @@ public class Ksiazka {
         this.gatunek = gatunek;
     }
 
+    public Set<Koszyk> getKoszyk() {
+        return koszyk;
+    }
+
+    public void setKoszyk(Set<Koszyk> koszyk) {
+        this.koszyk = koszyk;
+    }
+
+ 
+    
+
         @Override
     public String toString() {
-        return String.format("[%s - %s - %s - %s]", id_ksiazki, nazwa, gatunek);
+        return String.format("[%s - %s - %s - %s]", id_ksiazki, nazwa, gatunek, koszyk);
 
     }
     

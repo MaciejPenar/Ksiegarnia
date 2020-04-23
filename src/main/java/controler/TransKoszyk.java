@@ -2,15 +2,14 @@ package controler;
 
 public class TransKoszyk
 {
+     private Long id_koszyka;
 
-    private String nazwaKoszyka;
-    private String nazwa;
     private int ilosc;
 
     public TransKoszyk()
     {
-        this.nazwaKoszyka = "";
-        this.nazwa="";
+        this.ilosc = 1;
+        this.id_koszyka = null;
     }
 
     public int getIlosc() {
@@ -20,21 +19,13 @@ public class TransKoszyk
     public void setIlosc(int ilosc) {
         this.ilosc = ilosc;
     }
-    
-    public String getNazwaKoszyka() {
-        return nazwaKoszyka;
+
+    public Long getId_koszyka() {
+        return id_koszyka;
     }
 
-    public void setNazwaKoszyka(String nazwaKoszyka) {
-        this.nazwaKoszyka = nazwaKoszyka;
-    }
-
-    public String getNazwa() {
-        return nazwa;
-    }
-
-    public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
+    public void setId_koszyka(Long id_koszyka) {
+        this.id_koszyka = id_koszyka;
     }
 
 

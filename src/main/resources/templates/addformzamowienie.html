@@ -21,6 +21,7 @@
             <li><a href="/print_ksiazka">Ksiazki</a></li>
             <li><a href="/print_all_zam">Zamowienia</a></li>
             <li><a href="/print_adres">Adresy</a></li>
+            <li><a href="/print_koszyk">Koszyk</a></li>
         </ul>
     </div>
     <br/>
@@ -37,15 +38,15 @@
         
 
         <div class="form-group">    
-            <label> Data zamowienia: </label>
-            <input type="text" th:field="${transZamowienie.dataZamowienia}" value=""/><br/>            
+            <label> Data zamowienia: </label>    
+            <input type="date" th:field="${transZamowienie.dataZamowienia}" name="data"  class="input"/><br/>   
         </div>       
 
         <br/>
         
         <div class="form-group">    
             <label> Data otrzymania: </label>
-            <input type="text" th:field="${transZamowienie.dataOtrzymania}" value=""/><br/>            
+            <input type="date" th:field="${transZamowienie.dataOtrzymania}" name="data"  class="input"/><br/>   
         </div>       
 
         <br/>
@@ -58,9 +59,15 @@
         <br/>
         
         <div class="form-group">    
-            <label> Metoda platnosci: </label>
-            <input type="text" th:field="${transZamowienie.metodaPlatnosci}" value=""/><br/>            
-        </div>       
+                        <label>Metoda platnosci: </label>
+                        <br/>
+                        <select class="input" name="metoda" title="">
+                            <option>Wybierz metodę płatności</option>
+                            <option  th:each="metoda : ${metodaList}"
+                                     th:value="${metoda.id_metody}"
+                                     th:text="${metoda.id_metody}+'. '+${metoda.nazwa}"></option>                    
+                        </select>   
+                    </div>       
 
         <br/>
         
@@ -77,16 +84,11 @@
 
         <br/>
         
-        <div class="form-group">    
-                        <label>Ksiazka: </label>
-                        <br/>
-                        <select class="input" name="ksiazka" title="">
-                            <option>Książki</option>
-                            <option  th:each="ksiazka : ${ksiazkaList}"
-                                     th:value="${ksiazka.id_ksiazki}"
-                                     th:text="${ksiazka.id_ksiazki}+'. '+${ksiazka.nazwa}"></option>                    
-                        </select>   
-                    </div> 
+
+        
+        
+                       
+    
 
         <br/>
 

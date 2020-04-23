@@ -4,9 +4,9 @@
         <link rel="stylesheet" type="text/css" href="style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />        
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>   
-        <link rel="stylesheet" type="text/css" href="style.css" />
-        <title>Lista klientow</title>               
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/> 
+        <link rel="stylesheet" type="text/css" href="style.css" />        
+        <title>Koszyk</title>               
     </head>
     
     
@@ -23,6 +23,7 @@
             <li><a href="/print_koszyk">Koszyk</a></li>
         </ul>
     </div>
+            
             <div class="container">
             <div class="table-responsive">
                 <table id="tbl" class="table table-bordered"> 
@@ -30,24 +31,20 @@
                     <thead>
                         
                         <tr  class="active">
-                            <th><h1>Imie</h1></th>  
-                            <th><h1>Nazwisko</h1></th>  
-                            <th><h1>E-mail</h1></th> 
-                            <th><h1>Miejscowosc</h1></th> 
-                            <th><h1>Edycja</h1></th>
-                            <th><h1>Usuwanie</h1></th>
+                            <th><h1>Nazwa</h1></th>  
+                            <th><h1>Ilosc</h1></th>  
+                            <th><h1>Usuwanie</h1></th>  
                         </tr>
                         
                     </thead>
                     <tbody>                       
-                        <tr th:each ="klient : ${klientList}">               
+                        <tr th:each ="koszyk : ${koszykList}">               
                             
-                            <td> <b  th:utext="${klient.imie}">...</b> </td>
-                            <td> <b  th:utext="${klient.nazwisko}">...</b> </td>
-                            <td> <b  th:utext="${klient.email}">...</b> </td> 
-                            <td> <b  th:utext="${klient.adres.miejscowosc}">...</b> </td>
-                            <td align="center"> <a th:href="@{'/edit_klient/' + ${klient.id_klienta}}" class="buttonEdytuj">Edytuj</a> </td>
-                            <td align="center"> <a th:href="@{'/delete_klient/' + ${klient.id_klienta}}" class="buttonUsun">Usuń</a> </td>
+                            <td> <b  th:utext="${koszyk.ksiazka.nazwa}">...</b> </td>
+                            <td> <b  th:utext="${koszyk.ilosc}">...</b> </td>
+                            <td align="center"> <a th:href="@{'/delete_koszyk/' + ${koszyk.id_koszyka}}" class="buttonUsun">Usuń</a> </td>
+                           
+
 
                                  
                         </tr>
