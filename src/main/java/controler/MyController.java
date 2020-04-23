@@ -360,10 +360,10 @@ public class MyController {
         
         Ksiazka ksiazka1 = ksiazkaRepository.findById(id_ksiazki).get();
                
-        koszykRepository.save(new Koszyk(ilosc, ksiazka1));
+        koszykRepository.save(new Koszyk(ilosc, ksiazka));
         
         model.addAttribute("header", "Wynik"); 
-        model.addAttribute("message","Wstawiono do bazy ksiazke: "+ksiazka1+" ilosc: "+ilosc); 
+        model.addAttribute("message","Wstawiono do bazy ksiazke: "+ksiazka+" ilosc: "+ilosc); 
 
         return "viewmessagekoszyk";                
     }    
@@ -508,15 +508,12 @@ public class MyController {
             String dataZamowienia = transZamowienie.getDataZamowienia();
             String dataOtrzymania = transZamowienie.getDataOtrzymania();
             int koszt = transZamowienie.getKoszt();
-            String metodaPlatnosci = transZamowienie.getMetodaPlatnosci();
             Long id_klienta = klient.getId_klienta();
-            Long id_koszyka = koszyk.getId_koszyka();
             Long id_metody = metoda.getId_metody();
             Klient klient1 = klientRepository.findById(id_klienta).get();
-            Koszyk koszyk1 = koszykRepository.findById(id_koszyka).get();
             Metoda metoda1 = metodaRepository.findById(id_metody).get();
         
-       zamowienieRepository.save(new Zamowienie(id, dataZamowienia, dataOtrzymania, koszt, metoda1, klient1, koszyk1));
+       zamowienieRepository.save(new Zamowienie(id, dataZamowienia, dataOtrzymania, koszt, metoda1, klient1, koszyk));
         
         model.addAttribute("header", "Zaktualizowano dane w bazie");
         model.addAttribute("message", "" +dataZamowienia + " " +dataOtrzymania+ " " +koszt);

@@ -48,12 +48,16 @@ public class DataLoader implements ApplicationRunner {
         ksiazkaRepository.save(new Ksiazka("Balladyna", "Juliusz S�owacki", "dramat" , 30));
         ksiazkaRepository.save(new Ksiazka("Ostatnie �yczenie", "Andrzej Sapkowski", "Powie��, Literatura fantasy", 28));
         
-      //  pracownikRepository.save(new Pracownik("Jakub", "Baran", 123456789, "administrator" ));
+      //  pracownikRepository.save(new Pracownik("Jakub", "Baran", 123456789, "administrator", a1 ));
        // pracownikRepository.save(new Pracownik("Emilian", "Karnasiewicz", 345345345, "moderator" ));
       //  pracownikRepository.save(new Pracownik("Wojciech", "Gwizdak", 444444444, "logistyk" ));
       //  pracownikRepository.save(new Pracownik("Maciej", "Penar", 656565656, "moderator" ));
         
 
+      metodaRepository.save(new Metoda("Gotówka za pobraniem"));
+      metodaRepository.save(new Metoda("Przelew bankowy"));
+      metodaRepository.save(new Metoda("BLIK"));
+      
     }
 
 }

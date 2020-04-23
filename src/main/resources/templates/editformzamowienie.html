@@ -60,10 +60,16 @@
 
         <br/>
         
-        <div class="form-control"> 
-            <label> Metoda platnosci: </label>:
-            <input type="text" th:field="${zamowienie.metodaPlatnosci}" /><br/>            
-        </div>       
+        <div class="form-group">    
+                        <label>Metoda platnosci: </label>
+                        <br/>
+                        <select class="input" name="metoda" title="">
+                            <option>Wybierz metodę płatności</option>
+                            <option  th:each="metoda : ${metodaList}"
+                                     th:value="${metoda.id_metody}"
+                                     th:text="${metoda.nazwa}"></option>                    
+                        </select>   
+                    </div>        
 
         <br/>
         
@@ -80,17 +86,6 @@
                     </div> 
 
         <br/>
-        
-        <div class="form-group">    
-                        <label>Ksiazka: </label>
-                        <br/>
-                        <select class="input" name="ksiazka" title="">
-                            <option>Książki</option>
-                            <option  th:each="ksiazka : ${ksiazkaList}"
-                                     th:value="${ksiazka.id_ksiazki}"
-                                     th:text="${ksiazka.id_ksiazki}+'. '+${ksiazka.nazwa}"></option>                    
-                        </select>   
-                    </div> 
 
         <br/>
 
