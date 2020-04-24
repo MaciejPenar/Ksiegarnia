@@ -31,26 +31,34 @@
                     <thead>
                         
                         <tr  class="active">
-                            <th><h1>Nazwa</h1></th>  
+                            <th><h1>Nazwa</h1></th> 
+                            <th><h1>Cena</h1></th> 
                             <th><h1>Ilosc</h1></th>  
-                            <th><h1>Usuwanie</h1></th>  
+                            <th><h1>Razem</h1></th>
+                            <th><h1>Usuwanie</h1></th> 
                         </tr>
                         
+                        
                     </thead>
-                    <tbody>                       
+                    <tbody th:with="totalPrice=0">                       
                         <tr th:each ="koszyk : ${koszykList}">               
-                            
+        
                             <td> <b  th:utext="${koszyk.ksiazka.nazwa}">...</b> </td>
+                            <td> <b  th:utext="${koszyk.ksiazka.cena}">...</b> </td>
                             <td> <b  th:utext="${koszyk.ilosc}">...</b> </td>
-                            <td align="center"> <a th:href="@{'/delete_koszyk/' + ${koszyk.id_koszyka}}" class="buttonUsun">Usuń</a> </td>
-                           
-
-
-                                 
+                            <td> <b  th:utext="${koszyk.ksiazka.cena * koszyk.ilosc}">...</b> </td>
+                            <td align="center"> <a th:href="@{'/delete_koszyk/' + ${koszyk.id_koszyka}}" class="buttonUsun">Usuń</a> </td>  
                         </tr>
-
+                        <tr>
+                            <td colspan="3" align="right"><b>Do zaplaty</b></td>
+                            
+                            <td> <b th:text="${#aggregates.sum(koszykList.![ksiazka.cena * ilosc])}" /> <b>zł</b> </td>
+                            
+                        </tr>
+                        
                     </tbody>          
-                </table>    
+                </table>  
+                <a href="/add_zam" class="buttonEdytuj">Zloz zamowienie</a>
             </div>
             </div>
             

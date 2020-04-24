@@ -36,7 +36,6 @@
                             <th><h1>Metoda platnosci</h1></th> 
                             <th><h1>Edycja</h1></th>
                             <th><h1>Usuwanie</h1></th>
-                            <th><h1>Nazwa</h1></th>
                         </tr>
                         
                     </thead>
@@ -50,13 +49,9 @@
                             <td align="center"> <a th:href="@{'/edit_zam/' + ${zamowienie.id_zamowienia}}" class="buttonEdytuj">Edytuj</a> </td>
                             <td align="center"> <a th:href="@{'/delete_zam/' + ${zamowienie.id_zamowienia}}" class="buttonUsun">Usuń</a> </td>
                             </tr>
-                            <tr th:each ="koszyk : ${koszykList}">              
-                            <td> <b  th:utext="${koszyk.ksiazka.nazwa}">...</b> </td>
-                            </tr>
                     </tbody>          
                 </table>
-            </br>
-            </br>
+                </br>
 
                       <h3> <a href="/add_zam">Dodaj zamowienie </a></h3>
             </div>
