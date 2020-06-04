@@ -14,7 +14,7 @@
       
     <div id="menu">
         <ul>
-            <li><a href="/index.html">Strona glowna</a></li>
+            <li><a href="/admin.html">Strona glowna</a></li>
             <li><a href="/print_klient">Klienci</a></li>
             <li><a href="/print_pracownik">Pracownicy</a></li>
             <li><a href="/print_ksiazka">Ksiazki</a></li>
@@ -56,6 +56,26 @@
                 </table>    
             </div>
             </div>
+        
+    <input type="button" class="buttonExport" value="Stwórz raport" onclick="Export()" />    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript">
+        function Export() {
+            html2canvas(document.getElementById('tbl'), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("Raport.pdf");
+                }
+            });
+        }
+    </script>
             
 </body>
 </html>
