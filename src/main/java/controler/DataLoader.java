@@ -42,24 +42,13 @@ public class DataLoader implements ApplicationRunner {
         var a4 = new Adres("Rzeszow", "Krotka", "1", "10-100");
         var a5 = new Adres("Krosno", "Lewakowskiego", "3", "10-100");
         var a6 = new Adres("Krosno", "Krakowska", "43", "10-100");
-        var a7 = new Adres("Krosno", "Rynek", "11", "10-100");
-        var a8 = new Adres("Krosno", "Podkarpacka", "23", "10-100");
-        var a9 = new Adres("Krosno", "Podkarpacka", "13", "10-100");
         
         
       klientRepository.save(new Klient("Jan","Kowalski","jankowalski@gmail.com", a2));
-      klientRepository.save(new Klient("Adam","Nowak","adamnowak12@gmail.com", a3));             
-      klientRepository.save(new Klient("Kinga","Sarna","ksarna23@gmail.com", a4)); 
-      klientRepository.save(new Klient("Piotr","�y�a","piotrus@gmail.com", a5)); 
-      klientRepository.save(new Klient("Mariusz","Wal�sa","walesa23@gmail.com", a6)); 
-      klientRepository.save(new Klient("Jakub","Nowak","noqwak21@gmail.com", a3)); 
-      klientRepository.save(new Klient("Damian","Bak","damainb2@gmail.com", a2)); 
-      klientRepository.save(new Klient("Damian","Bak","damainb2@gmail.com", a1)); 
-      klientRepository.save(new Klient("Damian","Bak","damainb2@gmail.com", a7)); 
-      klientRepository.save(new Klient("Damian","Bak","damainb2@gmail.com", a8)); 
-      
-
-      
+      klientRepository.save(new Klient("Adam","Nowak","adamnowak12@gmail.com", a6));             
+      //  klientRepository.save(new Klient("Kinga","Sarna","ksarna23@gmail.com")); 
+      //  klientRepository.save(new Klient("Piotr","�y�a","piotrus@gmail.com")); 
+      //  klientRepository.save(new Klient("Mariusz","Wal�sa","walesa23@gmail.com")); 
 
       
         ksiazkaRepository.save(new Ksiazka("Teatr wskrzeszonych","kryminal, sensacja, thriller", "" , 21));
@@ -67,17 +56,14 @@ public class DataLoader implements ApplicationRunner {
         ksiazkaRepository.save(new Ksiazka("Przedwio�nie", "Stefan �eromski", "Powie��, Fikcja historyczna" , 25));
         ksiazkaRepository.save(new Ksiazka("Balladyna", "Juliusz S�owacki", "dramat" , 30));
         ksiazkaRepository.save(new Ksiazka("Ostatnie �yczenie", "Andrzej Sapkowski", "Powie��, Literatura fantasy", 28));
-        
 
         
         pracownikRepository.save(new Pracownik("Jakub", "Baran", 123456789, "administrator", a1 ));
-        pracownikRepository.save(new Pracownik("Emilian", "Karnasiewicz", 345345345, "moderator", a7 ));
-        pracownikRepository.save(new Pracownik("Wojciech", "Gwizdak", 444444444, "logistyk", a8  ));
-        pracownikRepository.save(new Pracownik("Maciej", "Penar", 656565656, "moderator", a9  ));
+       pracownikRepository.save(new Pracownik("Emilian", "Karnasiewicz", 345345345, "moderator", a3 ));
+      pracownikRepository.save(new Pracownik("Wojciech", "Gwizdak", 444444444, "logistyk", a4 ));
+      pracownikRepository.save(new Pracownik("Maciej", "Penar", 656565656, "moderator", a5 ));
         
 
-
-        
       metodaRepository.save(new Metoda("Gotówka za pobraniem"));
       metodaRepository.save(new Metoda("Przelew bankowy"));
       metodaRepository.save(new Metoda("BLIK"));
@@ -85,3 +71,12 @@ public class DataLoader implements ApplicationRunner {
     }
 
 }
+
+
+
+
+
+
+
+
+
