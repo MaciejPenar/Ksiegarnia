@@ -32,8 +32,12 @@ a:hover {
 }
 
 #menu {
-	float: center;
-	margin-top: 100px;
+        zoom: 1;
+        width: auto;
+        height: 100px;
+        background: rgb(181,193,196);
+background: linear-gradient(0deg, rgba(181,193,196,1) 0%, rgba(0,46,60,1) 0%, rgba(113,162,182,1) 100%);
+        padding: 8px 0;
 }
 
 #menu ul {
@@ -46,6 +50,7 @@ a:hover {
 	display: block;
 	float: left;
 	margin-left: 10px;
+        color: #FFF;
 }
 
 #menu a {
@@ -68,7 +73,7 @@ a:hover {
     -khtml-border-radius: 5px; 
     -moz-border-radius: 5px; 
     border-radius: 5px;
-    background: #8D8D8D;
+    background: #5da3b8
 }
 
 #change {
@@ -272,6 +277,7 @@ label{
         margin-bottom: 20px;
         
 }
+
 .buttonEdytuj:hover {
 	background:linear-gradient(to bottom, #E47833 5%, #E47833 100%);
 	background-color:#E47833;
