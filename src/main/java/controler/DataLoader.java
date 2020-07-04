@@ -31,13 +31,13 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         
         adresRepository.save(new Adres("Krosno", "Zielona", "1", "10-000"));
-        adresRepository.save(new Adres("Rzesz�w", "D�uga", "19", "10-100"));
+        adresRepository.save(new Adres("Rzeszów", "Długa", "19", "10-100"));
         adresRepository.save(new Adres("Warszawa", "Szeroka", "12", "10-111"));
-        adresRepository.save(new Adres("Krak�w", "Kr�lewska", "4", "10-111"));
-        adresRepository.save(new Adres("Pozna�", "Lipowa", "17", "10-111"));
+        adresRepository.save(new Adres("Kraków", "Królewska", "4", "10-111"));
+        adresRepository.save(new Adres("Poznań", "Lipowa", "17", "10-111"));
         
         var a1 = new Adres("Krosno", "Zielona", "1", "10-000");
-        var a2 = new Adres("Rzeszow", "D�uga", "19", "10-100");
+        var a2 = new Adres("Rzeszow", "Długa", "19", "10-100");
         var a3 = new Adres("Rzeszow", "Midowa", "12", "10-100");
         var a4 = new Adres("Rzeszow", "Krotka", "1", "10-100");
         var a5 = new Adres("Krosno", "Lewakowskiego", "3", "10-100");
@@ -47,15 +47,15 @@ public class DataLoader implements ApplicationRunner {
       klientRepository.save(new Klient("Jan","Kowalski","jankowalski@gmail.com", a2));
       klientRepository.save(new Klient("Adam","Nowak","adamnowak12@gmail.com", a6));             
       //  klientRepository.save(new Klient("Kinga","Sarna","ksarna23@gmail.com")); 
-      //  klientRepository.save(new Klient("Piotr","�y�a","piotrus@gmail.com")); 
-      //  klientRepository.save(new Klient("Mariusz","Wal�sa","walesa23@gmail.com")); 
+      //  klientRepository.save(new Klient("Piotr","Żyła","piotrus@gmail.com")); 
+      //  klientRepository.save(new Klient("Mariusz","Walęsa","walesa23@gmail.com")); 
 
       
         ksiazkaRepository.save(new Ksiazka("Teatr wskrzeszonych","kryminal, sensacja, thriller", "" , 21));
         ksiazkaRepository.save(new Ksiazka("Pan Tadeusz", "Adam Mickiewicz", "Poezja epicka" , 45));
-        ksiazkaRepository.save(new Ksiazka("Przedwio�nie", "Stefan �eromski", "Powie��, Fikcja historyczna" , 25));
-        ksiazkaRepository.save(new Ksiazka("Balladyna", "Juliusz S�owacki", "dramat" , 30));
-        ksiazkaRepository.save(new Ksiazka("Ostatnie �yczenie", "Andrzej Sapkowski", "Powie��, Literatura fantasy", 28));
+        ksiazkaRepository.save(new Ksiazka("Przedwiośnie", "Stefan Żeromski", "Powieść, Fikcja historyczna" , 25));
+        ksiazkaRepository.save(new Ksiazka("Balladyna", "Juliusz Słowacki", "dramat" , 30));
+        ksiazkaRepository.save(new Ksiazka("Ostatnie Życzenie", "Andrzej Sapkowski", "Powieść, Literatura fantasy", 28));
 
         
         pracownikRepository.save(new Pracownik("Jakub", "Baran", 123456789, "administrator", a1 ));
