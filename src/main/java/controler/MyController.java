@@ -237,7 +237,7 @@ public class MyController {
         zamowienieRepository.save(new Zamowienie(dataZamowienia,dataOtrzymania,koszt, metoda1, klient1, koszyk));
         
         model.addAttribute("header", "Wynik"); 
-        model.addAttribute("message","Wstawiono! Data zam�wienia: "+dataZamowienia+" data otrzymania: "+dataOtrzymania+"Koszyk: "+koszyk); 
+        model.addAttribute("message","Wstawiono! Data zamowienia: "+dataZamowienia+" data otrzymania: "+dataOtrzymania+" Koszyk: "+koszyk); 
         } catch (Exception e)
         { return "errorzam";
                 }

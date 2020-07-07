@@ -40,10 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/delete_ksiazka/{id_ksiazki}").hasAuthority("ROLE_STAFF")
                 .antMatchers("/delete_zam/{id_zamowienia}").hasAuthority("ROLE_STAFF")
                 
-                
-                
+                .antMatchers("/add_zam").hasAuthority("ROLE_CLIENT")              
+
                 .antMatchers("/admin").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/staff").hasAuthority("ROLE_STAFF")
+
                 .antMatchers("/client").hasAuthority("ROLE_CLIENT")
                 .anyRequest().permitAll()
                 .and()
