@@ -45,6 +45,11 @@ public class MyController {
     public String clientPage() {        
         return "client"; //Przekierowanie do strony client.html
     }
+    
+    @RequestMapping("/index")
+    public String indexPage() {        
+        return "index"; //Przekierowanie do strony index.html
+    }
 
     
 //------------------------------------------    WYSWIETLANIE    ------------------------------------------\\
